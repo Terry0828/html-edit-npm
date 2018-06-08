@@ -1,6 +1,5 @@
 
 # config
-*.log
 config/config.js
 package-lock.json
 
@@ -84,3 +83,6 @@ typings/
 
 # next.js build output
 .next
+
+# Gitbook
+_book
