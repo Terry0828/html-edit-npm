@@ -1,9 +1,9 @@
 {
-  "name": "with_friends_web",
-  "version": "1.0.0",
-  "description": "this is a project for WithFriends Web",
+  "name": "Html-Edit",
+  "version": "0.0.1",
+  "description": "this is a project for Html-Edit",
   "main": "index.js",
-  "repository": "git@github.com:FriendsT/WithFriends.git",
+  "repository": "https://github.com/Wen-JW/Html-Edit.git",
   "author": "wenjiawei",
   "license": "MIT",
   "scripts": {
