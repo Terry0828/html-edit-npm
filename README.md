@@ -10,7 +10,9 @@ Html 可视化编辑器
 ## 启动项目
 
 npm install
+
 cp ./config/config.dev.js ./config/config.js
+
 npm run dev
 
 http://localhost:10011/
