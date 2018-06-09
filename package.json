@@ -1,10 +1,10 @@
 {
-  "name": "Html-Edit",
+  "name": "html-edit-npm",
   "version": "0.0.1",
-  "description": "this is a project for Html-Edit",
+  "description": "this is a project for html-edit-npm",
   "main": "index.js",
-  "repository": "https://github.com/Wen-JW/Html-Edit.git",
-  "author": "wenjiawei",
+  "repository": "https://github.com/Wen-JW/html-edit-npm",
+  "author": "WenJW",
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -13,13 +13,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "archive": "^0.0.2",
     "archiver": "^2.1.1",
     "axios": "^0.18.0",
     "element-ui": "^2.3.8",
     "express": "^4.16.3",
     "fstream": "^1.0.11",
-    "tar": "^4.4.4",
     "vue": "^2.5.16",
     "vue-axios": "^2.1.1",
     "vue-lazy-render": "^1.0.20",
