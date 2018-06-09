@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <el-button type="primary" @click="down">生成</el-button>
+    <el-button type="primary" @click="add">生成</el-button>
+    <el-button type="primary" @click="zip">压缩</el-button>
   </div>
 </template>
 
@@ -8,6 +9,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import Fetch from '../../common/request'
+import axios from 'axios'
 
 @Component({
   name: 'Home',
@@ -44,8 +46,16 @@ export default class Home extends Vue {
   created () {
     
   }
-  down () {
-    Fetch._Get('/api/download', {html: JSON.stringify(this.html)})
+  add () {
+    let params = new URLSearchParams()
+
+    params.append('html', JSON.stringify(this.html))
+    // Fetch._Post('/api/add', params)
+
+    axios.post('/api/add', params, {headers: { 'Content-Type': 'application/x-www-form-urlencoded' }}).then((res) => res).catch(err => console.log(err))
+  }
+  zip () {
+    Fetch._Get('/api/zip')
   }
 }
 </script>
