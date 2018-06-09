@@ -3,6 +3,9 @@
 config/config.js
 package-lock.json
 
+# README.md
+\!*.md
+
 # dev
 bower_components
 .happypack
@@ -86,3 +89,7 @@ typings/
 
 # Gitbook
 _book
+
+# output
+output/build/*
+output/result/*
