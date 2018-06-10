@@ -39,7 +39,7 @@ exports._compressedFile = async(files = [], params) => {
 const getAllFiles = (root = config.file.build, reg = false) => {
   let res = []
 
-  const files = fs.readdirSync(root)
+  const files = fs.readdirSync(root, err => err)
   files.forEach(function(file) {
     const pathname = root + '/' + file
     const stat = fs.lstatSync(pathname)
@@ -61,10 +61,8 @@ exports._getAllFiles = async(root, reg) => getAllFiles(root, reg)
  * @description 判断文件或文件夹是否存在
  * @param {*} src
  */
-const isExists = (src = config.file.result) => {
-  return new Promise((resolve, reject) => {
-    fs.exists(src, res => resolve(res) )
-  })
+const isExists = async(src = config.file.result) => {
+  return fs.existsSync(src)
 }
 exports._isExists = (src) => isExists(src)
 
@@ -73,8 +71,7 @@ exports._isExists = (src) => isExists(src)
  * @param {*} src
  */
 const createFolder = async(src = config.file.result) => {
-  fs.mkdirSync(src)
-  return true
+  return fs.mkdirSync(src, err => err)
 }
 exports._createFolder = src => createFolder(src)
 
@@ -88,11 +85,64 @@ const createFile = async(src, content = '', options = {}) => {
       fs.mkdirSync(p)
     }
   }
-  fs.writeFileSync(path.resolve(src), content, options)
-  return true
+  return fs.writeFileSync(path.resolve(src), content, options)
 }
 exports._createFile = (src, content, options) => createFile(src, content, options)
 
-const _getFileBlobArr = (url = config.file.build, dit = false) => {
-  fs
+/**
+ * @description 删除文件夹、文件
+ * @param {*} src
+ */
+const deleteFolder = src => {
+  let files = []
+  if(fs.existsSync(src)) {
+    files = fs.readdirSync(src)
+    files.forEach(function(file,index){
+      const curPath = src + '/' + file
+      if(fs.statSync(curPath).isDirectory()) {
+        return deleteFolder(curPath)
+      } else { return fs.unlinkSync(curPath) }
+    })
+    return fs.rmdirSync(src)
+  }
 }
+exports._deleteFolder = async(src) => deleteFolder(src)
+
+const deleteFile = async(src) => {
+  return fs.unlinkSync(src)
+}
+exports._deleteFile = src => deleteFile(src)
+
+/**
+ * @description 判断文件类型
+ * @param {*} src
+ * @returns
+ */
+const getFileType = async(src) => {
+  let res = 'other'
+  if(fs.statSync(src).isDirectory()) {
+    res = 'folder'
+  } else if (fs.statSync(src).isFile()) {
+    res = 'file' }
+  return res
+}
+exports._getFileType = src => getFileType(src)
+
+/**
+ * @description 读取文件
+ * @param {*} src
+ * @param {number} [size=1024] 缓冲区大小
+ * @returns
+ */
+const readFile = async(src, size = 1024) => {
+  if(!fs.statSync(src).isFile()) { return false }
+  const buf = new Buffer(size)
+  const fd = fs.openSync(src, 'r+')
+  const bytes = fs.readSync(fd, buf, 0, buf.length, 0)
+  let res = false
+  if(bytes > 0){
+    res = buf.slice(0, bytes).toString() }
+  fs.closeSync(fd)
+  return res
+}
+exports._readFile = (src, size) => readFile(src, size)
