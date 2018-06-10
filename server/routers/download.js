@@ -1,10 +1,6 @@
 const express = require('express')
 const apiRoutes = express.Router()
 
-const path = require('path')
-const fs = require('fs')
-const os = require('os')
-
 const config = require('../../config/config')
 const {
   _compressedFile,
@@ -15,15 +11,14 @@ const {
   _deleteFile,
   _deleteFolder,
   _getFileType,
-  _readFile } = require('../utils/utils')
-
+  _readFile,
+  _getIp } = require('../utils/utils')
 
 apiRoutes.post('/add', (req, res) => {
   const query = req.body
   // console.log('body', req.body)
 
-  _readFile(config.file.build + '/css/a.txt')
-  .then(res => console.log('res', res))
+  _getIp().then(ip => console.log(ip))
   
   // _getFileType(config.file.build + '/css/a.txt')
   // .then(res => console.log(res))

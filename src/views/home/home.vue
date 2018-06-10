@@ -2,6 +2,7 @@
   <div class="home">
     <el-button type="primary" @click="add">生成</el-button>
     <el-button type="primary" @click="zip">压缩</el-button>
+    <el-button type="primary" @click="build">填充 Html</el-button>
   </div>
 </template>
 
@@ -56,6 +57,9 @@ export default class Home extends Vue {
   }
   zip () {
     Fetch._Get('/api/zip')
+  }
+  build () {
+    Fetch._Get('/api/build')
   }
 }
 </script>
