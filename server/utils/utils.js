@@ -67,6 +67,17 @@ const isExists = async(src = config.file.result) => {
 exports._isExists = (src) => isExists(src)
 
 /**
+ * @description 重命名
+ * @param {*} oldSrc
+ * @param {*} newSrc
+ * @returns
+ */
+const rename = async(oldSrc, newSrc) => {
+  return fs.renameSync(oldPath, newPath)
+}
+exports._rename = (oldPath, newPath) => rename(oldPath, newPath)
+
+/**
  * @description 创建文件夹、文件
  * @param {*} src
  */
@@ -146,3 +157,37 @@ const readFile = async(src, size = 1024) => {
   return res
 }
 exports._readFile = (src, size) => readFile(src, size)
+
+/**
+ * @description 获取 ip 地址
+ * @returns
+ */
+const getIp = async() => {
+  let ip = '127.0.0.1'
+  try {
+    const network = os.networkInterfaces()
+    const iplist = network.en0
+
+    if (iplist == null) {
+      for (let key in network) {
+        iplist = network[key]
+        break }
+      if (iplist == null) {
+        return ip }
+    }
+
+    if (iplist.length == 1) {
+      return iplist[0].address
+    } else {
+      for (let key in iplist) {
+        const ipModel = iplist[key]
+        if (ipModel.family == 'IPv4') {
+          return ipModel.address
+        }
+      } }
+  } catch (e) {
+    console.log(e.message)
+    return false }
+  return ip
+}
+exports._getIp = () => getIp()
