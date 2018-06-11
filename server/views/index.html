@@ -11,7 +11,7 @@
   <title><%= config.title %></title>
   
   <!-- 初始化样式 -->
-
+  <% include ./styleInit.html %>
   <% if(config.mobile === "app") { %>
   <!-- 如果移动端增加 rem 适配 -->
   <% include ./rem.html %>
