@@ -1,7 +1,7 @@
 const express = require('express')
 const apiRoutes = express.Router()
 
-const config = require('../../config/config')
+const config = require('../config')
 const {
   _compressedFile,
   _getAllFiles,
@@ -20,13 +20,13 @@ apiRoutes.post('/add', (req, res) => {
 
   _getIp().then(ip => console.log(ip))
   
-  // _getFileType(config.file.build + '/css/a.txt')
+  // _getFileType(config.path.build + '/css/a.txt')
   // .then(res => console.log(res))
   // .catch(err => console.log('err', err))
 
-  // _isExists(config.file.build + '/css/a.txt').then(res => console.log(res))
+  // _isExists(config.path.build + '/css/a.txt').then(res => console.log(res))
   // .then(res => {
-  //   return _createFile(config.file.build + '/css/a.txt', 'this is a file for test222!')
+  //   return _createFile(config.path.build + '/css/a.txt', 'this is a file for test222!')
   // })
   // .then(res => res ? console.log('the file is create success!') : console.log('the file is exists!'))
 
@@ -46,7 +46,7 @@ apiRoutes.get('/zip', (req, res) => {
   })
   .then(() => _getAllFiles())
   .then(res => _compressedFile(res))
-  .then(() => _deleteFolder(config.file.build + '/css'))
+  .then(() => _deleteFolder(config.path.build + '/css'))
   .then(res => console.log('res', res))
   .catch(err => console.log('err', err))
 
