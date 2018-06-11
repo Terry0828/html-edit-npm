@@ -2,12 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="shortcut icon " type="images/x-icon" href="/favicon.ico">
-  <title><%= title %></title>
+  <meta name="description" content="<%= config.desc %>" >
+  <meta name="keywords" content="<%= config.key %>" >
+  <meta name="author" content="WenJW&lt;17648253663@163.com&gt;" >
+  <link type="image/x-icon" rel="shortcut icon" href="/favicon.ico"/>
+  <title><%= config.title %></title>
+  
+  <!-- 初始化样式 -->
+
+  <% if(config.mobile === "app") { %>
+  <!-- 如果移动端增加 rem 适配 -->
+  <% include ./rem.html %>
+  <% } %>
 </head>
 <body>
-  <%= list %>
+  <%= data.list %>
+  <%- data.js %>
 </body>
 </html>
