@@ -5,10 +5,15 @@ module.exports = {
     module: path.resolve(__dirname, './views'),
     build: path.resolve(__dirname, '../output/build'),
     result: path.resolve(__dirname, '../output/result'),
+    imgs: ''
   },
   // 压缩代码配置
-  JsMinify: {},
-  CssMinify: {},
+  JsMinify: {
+  },
+  CssMinify: {
+    maxLineLen: 500,
+    expandVars: true
+  },
   HtmlMinify: {
     collapseBooleanAttributes: true, // 忽略属性布尔值
     collapseWhitespace: true, // 折叠文本换行

@@ -12,7 +12,7 @@ const {
   _deleteFolder,
   _getFileType,
   _readFile,
-  _getIp } = require('../utils/utils')
+  _getIp } = require('../utils/file')
 
 apiRoutes.post('/add', (req, res) => {
   const query = req.body

@@ -3,6 +3,9 @@
     <el-button type="primary" @click="add">生成</el-button>
     <el-button type="primary" @click="zip">压缩</el-button>
     <el-button type="primary" @click="build">填充 Html</el-button>
+    <div id="jsoneditor">
+    </div>
+    
   </div>
 </template>
 
@@ -10,7 +13,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import Fetch from '../../common/request'
-import axios from 'axios'
 
 @Component({
   name: 'Home',
@@ -18,48 +20,117 @@ import axios from 'axios'
   }
 })
 export default class Home extends Vue {
-  html: any = {
-    0: {
-      el: 'div',
-      class: 'one',
-      text: '第一层',
-      child: [
-        {
-          el: 'p',
-          class: 'one-son',
-          text: '第二层',
-        }
-      ]
+  data: any = {
+    config: {
+      mobile: 'pc', // app 会渲染 rem 适配代码
+      title: '测试',
+      desc: '1111111',
+      key: ''
     },
-    1: {
-      el: 'div',
-      class: 'two',
-      text: '第一层',
-      child: [
-        {
-          el: 'span',
-          class: 'two-son',
-          text: '第二层',
-        }
-      ]
+    link: {
+      style: ['./animated.css', 'http://baidu.com/index.css'],
+      js: ['./test.js', '//medis.com/index.js'],
     },
+    data: {
+      layout: [
+        {
+          0: {
+            el: 'div',
+            class: ['wrap'],
+            attr: {
+              id: '',
+              name: '',
+              value: '',
+            },
+            other: '',
+            data: {
+              key: 'one'
+            },
+            content: '',
+            children: [
+              {
+                0: {
+                  el: 'p',
+                  class: ['title'],
+                  attr: {
+                    id: '',
+                    name: '',
+                    value: '',
+                  },
+                  other: '',
+                  data: {
+                    key: 'two'
+                  },
+                  content: '',
+                  children: [
+                    {
+                      0: {
+                        el: 'span',
+                        class: ['text'],
+                        attr: {
+                          id: '',
+                          name: '',
+                          value: '',
+                        },
+                        other: '',
+                        data: {
+                          key: 'span'
+                        },
+                        content: 'span-text'
+                      }
+                    }
+                  ]
+                },
+                1: {
+                  el: 'div',
+                  class: ['content'],
+                  attr: {
+                    id: '',
+                    name: '',
+                    value: '',
+                  },
+                  other: '',
+                  data: {
+                    key: 'three'
+                  },
+                  content: 'div-content'
+                }
+              }
+            ]
+          }
+        }
+      ],
+      style: `body { color: #444444; }
+      div { background: orange; }`,
+      js: `console.log('sda');
+      var absolutt = 0;
+      var b = 0;`
+    }
   }
+
   created () {
-    
   }
+  mounted () {
+  }
+
   add () {
-    let params = new URLSearchParams()
+    const params = new URLSearchParams()
 
-    params.append('html', JSON.stringify(this.html))
-    // Fetch._Post('/api/add', params)
+    console.log(this.data)
+    console.log(JSON.stringify(this.data))
 
-    axios.post('/api/add', params, {headers: { 'Content-Type': 'application/x-www-form-urlencoded' }}).then((res) => res).catch(err => console.log(err))
+    params.append('html', JSON.stringify(this.data))
+    Fetch._Post('/api/add', params)
   }
+
   zip () {
-    Fetch._Get('/api/zip')
+    Fetch._Post('/api/zip')
   }
   build () {
-    Fetch._Get('/api/build')
+    const params = new URLSearchParams()
+
+    params.append('html', JSON.stringify(this.data))
+    Fetch._Post('/api/build', params)
   }
 }
 </script>
@@ -69,5 +140,9 @@ export default class Home extends Vue {
 @import '../../assets/css/index';
 .hello {
   color: #787878;
+}
+.json-edit-box {
+  width: 90%;
+  margin: 0 auto;
 }
 </style>

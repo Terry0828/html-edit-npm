@@ -4,21 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="description" content="<%= config.desc %>" >
-  <meta name="keywords" content="<%= config.key %>" >
+  <meta name="description" content="<%= desc %>" >
+  <meta name="keywords" content="<%= key %>" >
   <meta name="author" content="WenJW&lt;17648253663@163.com&gt;" >
-  <link type="image/x-icon" rel="shortcut icon" href="/favicon.ico"/>
-  <title><%= config.title %></title>
+  <link type="image/x-icon" rel="shortcut icon" href="./favicon.ico"/>
+  <link rel="stylesheet" href="./css/index.css">
+  <title><%= title %></title>
   
+  <!-- 样式文件 -->
+  <%- linkCSS %>
   <!-- 初始化样式 -->
   <% include ./styleInit.html %>
-  <% if(config.mobile === "app") { %>
+  <% if(mobile === "app") { %>
   <!-- 如果移动端增加 rem 适配 -->
   <% include ./rem.html %>
   <% } %>
 </head>
 <body>
-  <%= data.list %>
-  <%- data.js %>
+  <%= layout %>
+
+<!-- js 文件 -->
+<%- linkJS %>
+<script src="./js/index.js"></script>
 </body>
 </html>

@@ -1,34 +1,56 @@
 const express = require('express')
 const apiRoutes = express.Router()
 const ejs = require('ejs')
-const htmlMinify = require('html-minifier').minify
 
 const config = require('../config')
 const {
   _readFile,
-  _createFile } = require('../utils/utils')
+  _createFile,
+  _copyFolder,
+  _copyFile } = require('../utils/file')
 
-const data = {
-  filename: config.path.module + '/index.html',
-  config: {
-    mobile: 'pc', // app 会渲染 rem 适配代码
-    title: '测试',
-    desc: '1111111',
-    key: ''
-  },
-  data: {
-    list: 'ssafasf',
-    js: '<script>console.log("sda")</script>'
+const {
+  _JSCodeMinify,
+  _CSSCodeMinify,
+  _HTMLMinify,
+  _styleLink,
+  _jsLink } = require('../utils/code')
+
+apiRoutes.post('/build', (req, res) => {
+  const _body = JSON.parse(req.body.html),
+    _data = _body.data,
+    _link= _body.link,
+    _config = _body.config,
+    _js = _data.js,
+    _style = _data.style,
+    _layout = _data.layout
+  
+  console.log(_styleLink(_link.style))
+
+  const data = {
+    filename: config.path.module + '/index.html',
+    ..._config,
+    layout: _layout,
+    linkCSS: _styleLink(_link.style),
+    linkJS: _jsLink(_link.js)
   }
-}
-
-apiRoutes.get('/build', (req, res) => {
-  _readFile(config.path.module + '/index.html')
+  _JSCodeMinify(_js)
+  .then(res => {
+    if(res === false) { return false }
+    _createFile(config.path.build + '/js/index.js', res.code)
+  })
+  .then(() => _CSSCodeMinify(_style))
+  .then(res => {
+    if(res === false) { return false }
+    _createFile(config.path.build + '/css/index.css', res)
+  })
+  .then(() => _copyFile(config.path.module + '/favicon.ico', config.path.build + '/favicon.ico'))
+  .then(() => _readFile(config.path.module + '/index.html'))
   .then(result => {
     const module = ejs.render(result, data)
-    return _createFile(config.path.result + '/index.html', htmlMinify(module, config.HtmlMinify))
-    // return _createFile(config.file.result + '/index.html', module)
+    return _HTMLMinify(module)
   })
+  .then(res => _createFile(config.path.build + '/index.html', res))
   .then(() => {
     return res.json({
       code: 0,

@@ -12,7 +12,7 @@ const Build = require('./server/routers/build')
 const app = express()
 const apiRoutes = express.Router()
 
-const { _createFile, } = require('./server/utils/utils')
+const { _createFile, } = require('./server/utils/file')
 
 app.engine('.html', require('ejs').__express)
 app.set('views', __dirname + '/views/')
