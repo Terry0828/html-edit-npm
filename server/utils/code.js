@@ -1,7 +1,15 @@
+/*
+ * @Author: WenJW
+ * @Date: 2018-07-06 17:00:25
+ * @Last Modified by: WenJW
+ * @Last Modified time: 2018-07-06 18:15:00
+ * @description
+ */
 
 const htmlMinify = require('html-minifier').minify
 const UglifyJS = require('uglify-js')
 const UglifyCSS = require('uglifycss')
+
 
 const Config = require('../config')
 const { _getDataType } = require('./utils')
@@ -24,6 +32,16 @@ const jsLink = (arr = []) => {
   return result
 }
 exports._jsLink = (arr) => jsLink(arr)
+
+// 代码生成处理
+const CreateHtmlCode = async(code) => {}
+exports._CreateHtmlCode = (code) => CreateHtmlCode(code)
+
+const CreateCssCode = async(code) => {}
+exports._CreateCssCode = (code) => CreateCssCode(code)
+
+const CreateJSCode = async(code) => {}
+exports._CreateJSCode = (code) => CreateJSCode(code)
 
 // 代码压缩处理
 const HTMLMinify = async(code, config = Config.HtmlMinify) => {

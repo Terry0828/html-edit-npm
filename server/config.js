@@ -7,6 +7,11 @@ module.exports = {
     result: path.resolve(__dirname, '../output/result'),
     imgs: ''
   },
+  // babel-core 配置
+  Babel: {
+    ast: false,
+    extends: path.resolve(__dirname, './babel/.babelrc'),
+  },
   // 压缩代码配置
   JsMinify: {
   },

@@ -16,6 +16,12 @@ const {
   _styleLink,
   _jsLink } = require('../utils/code')
 
+apiRoutes.post('/test', (req, res) => {
+  console.log(req.body)
+  const _js = req.body.js
+
+})
+
 apiRoutes.post('/build', (req, res) => {
   const _body = JSON.parse(req.body.html),
     _data = _body.data,

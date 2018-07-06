@@ -4,6 +4,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 
+// babel
+import 'babel-polyfill'
 // element-ui
 import ElementUI from 'element-ui'
 Vue.use(ElementUI)

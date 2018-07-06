@@ -1,11 +1,7 @@
 
 export default {
   state: {
-    isLogo: false, // 是否登录
-    userInfo: {},
-    title: 'withFriends', // 网页title
-    old: false, // 系统版本是否太低
-    version: false , // 系统信息
+    autoCloseTag: ['br', 'hr', 'area', 'base', 'img', 'input', 'link', 'meta', 'basefont', 'param', 'col', 'frame', 'embed', 'keygen', 'source', 'command', 'track', 'wbr'] // 自闭和标签
   },
   mutations: {
     /**

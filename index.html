@@ -9,4 +9,126 @@
   <body>
     <div id="app"></div>
   </body>
+
+  <script>
+  var arr = ['br', 'hr', 'area', 'base', 'img', 'input', 'link', 'meta', 'basefont', 'param', 'col', 'frame', 'embed', 'keygen', 'source', 'command', 'track', 'wbr']
+  var a = {
+    layout: {
+      0: {
+        el: 'div',
+        class: ['wrap'],
+        attr: {
+          id: 'div1',
+          name: '',
+          value: '',
+        },
+        other: '',
+        data: {
+          key: 'one'
+        },
+        text: '',
+        children: [
+          {
+            0: {
+              el: 'p',
+              class: ['title'],
+              attr: {
+                id: '',
+                name: '',
+                value: '',
+              },
+              other: '',
+              data: {
+                key: 'two'
+              },
+              text: '',
+              children: [
+                {
+                  0: {
+                    el: 'span',
+                    class: ['text'],
+                    attr: {
+                      id: '',
+                      name: '',
+                      value: '',
+                    },
+                    other: '',
+                    data: {
+                      key: 'span'
+                    },
+                    text: 'span-text'
+                  }
+                }
+              ]
+            },
+            1: {
+              el: 'div',
+              class: ['content'],
+              attr: {
+                id: '',
+                name: '',
+                value: '',
+              },
+              other: '',
+              data: {
+                key: 'three'
+              },
+              text: 'div-content'
+            }
+          }
+        ]
+      }
+    },
+    // style: {
+    //   body: {
+    //     color: '',
+    //   }
+    // },
+    style: `body { color: #444444; }
+    div { background: orange; }`,
+    js: `console.log('sda');
+    var absolutt = 0;
+    var b = 0;`
+  }
+  const getDataType = (data) => {
+    return Object.prototype.toString.call(data).toLowerCase().replace(/^\[object (\w+)\]$/, '$1')
+
+  }
+  const valMap = (data, fn, order = true) => {
+    if (getDataType(data) === 'array') {
+      order ? null : data.reverse()
+      for (let i = 0, len = data.length; i < len; i++) {
+        const val = fn(data[i], i)
+        if (val === false) { return }
+      }
+    } else if (getDataType(data) === 'object') {
+      const keys = Object.keys(data)
+      order ? null : keys.reverse()
+      for (let i = 0, len = keys.length; i < len; i++) {
+        const val = fn(data[keys[i]], keys[i], i)
+        if (val === false) { return }
+      }
+    } else { throw(new Error(`传入的值不是数组或对象！(type: ${getDataType(data)})`)) }
+  }
+
+  var html = a.layout
+
+  function creTag (tag, attr, content) {
+    console.log(`<${tag} ${attr} />`)
+    if(arr.includes(tag)) { return `<${tag} ${attr} />` }
+    else { return `<${tag} ${attr}>${content || ""}</${tag}>` }
+  }
+  function creH (h) {
+    var result = ''
+
+    valMap(h, (item, index) => {
+      console.log(item)
+      result = creTag(item.el, '')
+      // result += item.el
+    })
+    return result
+  }
+
+  console.log(creH(html))
+  </script>
 </html>

@@ -5,6 +5,7 @@
     <el-button type="primary" @click="build">填充 Html</el-button>
     <div id="jsoneditor">
     </div>
+    <el-button type="primary" @click="test">Babel</el-button>
     
   </div>
 </template>
@@ -46,7 +47,7 @@ export default class Home extends Vue {
             data: {
               key: 'one'
             },
-            content: '',
+            text: '',
             children: [
               {
                 0: {
@@ -61,7 +62,7 @@ export default class Home extends Vue {
                   data: {
                     key: 'two'
                   },
-                  content: '',
+                  text: '',
                   children: [
                     {
                       0: {
@@ -76,7 +77,7 @@ export default class Home extends Vue {
                         data: {
                           key: 'span'
                         },
-                        content: 'span-text'
+                        text: 'span-text'
                       }
                     }
                   ]
@@ -93,13 +94,18 @@ export default class Home extends Vue {
                   data: {
                     key: 'three'
                   },
-                  content: 'div-content'
+                  text: 'div-content'
                 }
               }
             ]
           }
         }
       ],
+      // style: {
+      //   body: {
+      //     color: '',
+      //   }
+      // },
       style: `body { color: #444444; }
       div { background: orange; }`,
       js: `console.log('sda');
@@ -121,6 +127,13 @@ export default class Home extends Vue {
 
     params.append('html', JSON.stringify(this.data))
     Fetch._Post('/api/add', params)
+  }
+
+  test () {
+    const params = new URLSearchParams()
+
+    params.append('js', 'Array.from({a: 4, b: 8})')
+    Fetch._Post('/api/test', params)
   }
 
   zip () {
