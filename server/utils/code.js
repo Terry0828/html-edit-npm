@@ -2,7 +2,7 @@
  * @Author: WenJW
  * @Date: 2018-07-06 17:00:25
  * @Last Modified by: WenJW
- * @Last Modified time: 2018-07-06 18:15:00
+ * @Last Modified time: 2018-07-07 20:59:18
  * @description
  */
 
@@ -10,9 +10,10 @@ const htmlMinify = require('html-minifier').minify
 const UglifyJS = require('uglify-js')
 const UglifyCSS = require('uglifycss')
 
-
 const Config = require('../config')
-const { _getDataType } = require('./utils')
+const {
+  _getDataType,
+  _valMap } = require('./utils')
 
 // 代码引入处理
 const styleLink = (arr = []) => {
@@ -33,9 +34,52 @@ const jsLink = (arr = []) => {
 }
 exports._jsLink = (arr) => jsLink(arr)
 
+
+
 // 代码生成处理
-const CreateHtmlCode = async(code) => {}
-exports._CreateHtmlCode = (code) => CreateHtmlCode(code)
+
+// 处理 class 属性
+const createClass = (classList) => {
+  let result = ''
+  if(_getDataType(classList) === 'string') {
+    result += ` class="${classList}"`
+  } else if(_getDataType(classList) === 'array') {
+    let res = ''
+    _valMap(classList, (item, index) => {
+      index === 0 ? res += item : res += ` ${item}`
+    })
+    result += ` class="${res}"`
+  }
+  return result
+}
+// 处理 value 等属性
+const createAttr = (attr, data, other) => {
+  let result = ''
+  _getDataType(attr) === 'object' ? _valMap(attr, (item, key) => { item && (result += ` ${key}="${item}"`) }) : void 0
+  _getDataType(data) === 'object' ? _valMap(data, (item, key) => { item && (result += ` data-${key}="${item}"`) }) : void 0
+  _getDataType(other) === 'string' && other ? result += ` ${other}` : void 0
+  return result
+}
+// 处理 html 标签
+const createTag = (arr, tag, attr, content) => {
+  if(arr.includes(tag)) {
+    return `<${tag}${attr} />` }
+  else { return `<${tag}${attr}>${content || ""}</${tag}>` }
+}
+// 创建 html 结构
+const createHtmlLayout = layout => {
+  let result = ''
+  _valMap(layout, item => {
+    let attr = '', content = ''
+    attr += createClass(item.class)
+    attr += createAttr(item.attr, item.data, item.other)
+    content += item.text
+    if(item.children) { content += createHtmlLayout(item.children) }
+    result += createTag(Config.autoCloseTag, item.el, attr, content)
+  })
+  return result
+}
+exports._CreateHtmlCode = async(layout) => createHtmlLayout(layout)
 
 const CreateCssCode = async(code) => {}
 exports._CreateCssCode = (code) => CreateCssCode(code)

@@ -14,12 +14,22 @@ const {
   _CSSCodeMinify,
   _HTMLMinify,
   _styleLink,
-  _jsLink } = require('../utils/code')
+  _jsLink,
+  _CreateHtmlCode } = require('../utils/code')
 
 apiRoutes.post('/test', (req, res) => {
   console.log(req.body)
-  const _js = req.body.js
-
+  const _js = JSON.parse(req.body.html)
+  console.log(_js)
+  _CreateHtmlCode(_js)
+  .then(result => {
+    return res.json({
+      code: 0,
+      message: "success",
+      data: result
+    })
+  })
+  
 })
 
 apiRoutes.post('/build', (req, res) => {

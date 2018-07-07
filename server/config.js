@@ -35,5 +35,6 @@ module.exports = {
     useShortDoctype: true, // 使用短 Doctype
     removeRedundantAttributes: true, // 当值匹配默认值时删除属性。
     removeEmptyElements: true, // 删除空白内容的所有元素
-  }
+  },
+  autoCloseTag: ['br', 'hr', 'area', 'base', 'img', 'input', 'link', 'meta', 'basefont', 'param', 'col', 'frame', 'embed', 'keygen', 'source', 'command', 'track', 'wbr'] // 自闭合标签
 }

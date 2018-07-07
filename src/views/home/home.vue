@@ -33,26 +33,38 @@ export default class Home extends Vue {
       js: ['./test.js', '//medis.com/index.js'],
     },
     data: {
-      layout: [
-        {
-          0: {
-            el: 'div',
-            class: ['wrap'],
-            attr: {
-              id: '',
-              name: '',
-              value: '',
-            },
-            other: '',
-            data: {
-              key: 'one'
-            },
-            text: '',
-            children: [
-              {
+      layout: {
+        0: {
+          el: 'div',
+          class: ['wrap'],
+          attr: {
+            id: '',
+            name: '',
+            value: '',
+          },
+          other: '',
+          data: {
+            key: 'one'
+          },
+          text: 'div1',
+          children: {
+            0: {
+              el: 'p',
+              class: ['title'],
+              attr: {
+                id: '',
+                name: '',
+                value: '',
+              },
+              other: '',
+              data: {
+                key: 'two'
+              },
+              text: '',
+              children: {
                 0: {
-                  el: 'p',
-                  class: ['title'],
+                  el: 'span',
+                  class: ['text'],
                   attr: {
                     id: '',
                     name: '',
@@ -60,54 +72,37 @@ export default class Home extends Vue {
                   },
                   other: '',
                   data: {
-                    key: 'two'
+                    key: 'span'
                   },
-                  text: '',
-                  children: [
-                    {
-                      0: {
-                        el: 'span',
-                        class: ['text'],
-                        attr: {
-                          id: '',
-                          name: '',
-                          value: '',
-                        },
-                        other: '',
-                        data: {
-                          key: 'span'
-                        },
-                        text: 'span-text'
-                      }
-                    }
-                  ]
-                },
-                1: {
-                  el: 'div',
-                  class: ['content'],
-                  attr: {
-                    id: '',
-                    name: '',
-                    value: '',
-                  },
-                  other: '',
-                  data: {
-                    key: 'three'
-                  },
-                  text: 'div-content'
+                  text: 'span-text'
                 }
               }
-            ]
+            },
+            1: {
+              el: 'img',
+              class: ['content'],
+              attr: {
+                id: '',
+                name: '',
+                value: '',
+              },
+              other: '',
+              data: {
+                key: 'three'
+              },
+              text: ''
+            }
           }
         }
-      ],
-      // style: {
+      },
+      style: `
+        body { color: yellow;background: blue; }
+      `,
+      // style: {d
       //   body: {
       //     color: '',
       //   }
       // },
-      style: `body { color: #444444; }
-      div { background: orange; }`,
       js: `console.log('sda');
       var absolutt = 0;
       var b = 0;`
@@ -131,9 +126,9 @@ export default class Home extends Vue {
 
   test () {
     const params = new URLSearchParams()
-
-    params.append('js', 'Array.from({a: 4, b: 8})')
-    Fetch._Post('/api/test', params)
+    console.log(JSON.stringify(this.data.data))
+    params.append('html', JSON.stringify(this.data.data.layout))
+    Fetch._Post('/api/test', params).then(res => console.log(res))
   }
 
   zip () {
