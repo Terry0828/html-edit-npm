@@ -1,12 +1,24 @@
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="scss">
+@import '../../assets/css/index';
+.hello {
+  color: #787878;
+}
+.json-edit-box {
+  width: 90%;
+  margin: 0 auto;
+}
+</style>
+
 <template>
   <div class="home">
     <el-button type="primary" @click="add">生成</el-button>
     <el-button type="primary" @click="zip">压缩</el-button>
     <el-button type="primary" @click="build">填充 Html</el-button>
+    <el-button type="primary" @click="test">生成 Html Code</el-button>
+
     <div id="jsoneditor">
     </div>
-    <el-button type="primary" @click="test">Babel</el-button>
-    
   </div>
 </template>
 
@@ -16,7 +28,7 @@ import Component from 'vue-class-component'
 import { _Post } from '../../common/request'
 import { _GetHash } from '../../common/utils'
 
-console.log(_GetHash(12))
+console.log(_GetHash(1))
 
 @Component({
   name: 'Home',
@@ -25,6 +37,9 @@ console.log(_GetHash(12))
 })
 export default class Home extends Vue {
   data: any = {
+    other: {
+      index: 0
+    },
     config: {
       mobile: 'pc', // app 会渲染 rem 适配代码
       title: '测试',
@@ -35,6 +50,76 @@ export default class Home extends Vue {
       style: ['./animated.css', 'http://baidu.com/index.css'],
       js: ['./test.js', '//medis.com/index.js'],
     },
+    html: {
+      layout: [
+        {
+          key: '2a96284b',
+          children: [
+            {
+              key: '1a96284b',
+              children: [
+                {
+                  key: '1596284b',
+                }
+              ]
+            },
+            {
+              key: '4a96284b'
+            },
+          ]
+        }
+      ],
+      attr: {
+        '2a96284b': {
+          el: 'div',
+          class: ['wrap'],
+          attr: {
+            id: 'wap1',
+          },
+          data: {
+            key: 'one'
+          },
+          style: {
+            background: 'orange',
+            fontWeight: 500
+          },
+          text: 'div1'
+        },
+        '1a96284b': {
+          el: 'p',
+          class: ['title'],
+          data: {
+            key: 'two'
+          },
+          text: '测试p',
+        },
+        '1596284b': {
+          el: 'span',
+          class: ['text'],
+          other: 'data-v',
+          data: {
+            key: 'span'
+          },
+          style: {
+            color: 'red',
+            borderBottom: '1px solid #000'
+          },
+          text: 'span-text'
+        },
+        '4a96284b': {
+          el: 'img',
+          class: 'content',
+          data: {
+            key: 'three'
+          }
+        }
+      }
+    },
+    style: `body { color: yellow;background: blue; }`,
+    js: `console.log('sda');
+      var absolutt = 0;
+      var b = 0;`,
+    // old
     data: {
       layout: {
         0: {
@@ -131,8 +216,7 @@ export default class Home extends Vue {
   test () {
     const params = new URLSearchParams()
 
-    console.log(JSON.stringify(this.data.data))
-    params.append('html', JSON.stringify(this.data.data.layout))
+    params.append('data', JSON.stringify(this.data))
     _Post('/api/test', params).then(res => console.log(res))
   }
 
@@ -147,15 +231,3 @@ export default class Home extends Vue {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-@import '../../assets/css/index';
-.hello {
-  color: #787878;
-}
-.json-edit-box {
-  width: 90%;
-  margin: 0 auto;
-}
-</style>

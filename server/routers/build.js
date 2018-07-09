@@ -18,10 +18,9 @@ const {
   _CreateHtmlCode } = require('../utils/code')
 
 apiRoutes.post('/test', (req, res) => {
-  console.log(req.body)
-  const _js = JSON.parse(req.body.html)
-  console.log(_js)
-  _CreateHtmlCode(_js)
+  const code = JSON.parse(req.body.data)
+  // console.log(code.html)
+  _CreateHtmlCode(code.html.layout, code.html.attr)
   .then(result => {
     return res.json({
       code: 0,

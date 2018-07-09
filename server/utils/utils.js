@@ -4,10 +4,16 @@
  * @param {*} data
  * @returns
  */
-const getDataType = (data) => {
-  return Object.prototype.toString.call(data).toLowerCase().replace(/^\[object (\w+)\]$/, '$1')
-}
+const getDataType = (data) => Object.prototype.toString.call(data).toLowerCase().replace(/^\[object (\w+)\]$/, '$1')
 exports._GetDataType = data => getDataType(data)
+
+/**
+ * @description fontSize => font-size
+ * @param {*} name 要处理的字符
+ * @param {*} unit 连接符
+ */
+const getVarFormHump = (name, unit = '-') => name.replace(/([A-Z])/g, `${unit}$1`).toLowerCase()
+exports._GetVarFormHump = (name, unit) => getVarFormHump(name, unit)
 
 /**
  * @description

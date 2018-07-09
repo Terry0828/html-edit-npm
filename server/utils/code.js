@@ -2,7 +2,7 @@
  * @Author: WenJW
  * @Date: 2018-07-06 17:00:25
  * @Last Modified by: WenJW
- * @Last Modified time: 2018-07-07 20:59:18
+ * @Last Modified time: 2018-07-09 20:53:55
  * @description
  */
 
@@ -12,8 +12,9 @@ const UglifyCSS = require('uglifycss')
 
 const Config = require('../config')
 const {
-  _getDataType,
-  _valMap } = require('./utils')
+  _GetDataType,
+  _ValMap,
+  _GetVarFormHump } = require('./utils')
 
 // 代码引入处理
 const styleLink = (arr = []) => {
@@ -37,15 +38,24 @@ exports._jsLink = (arr) => jsLink(arr)
 
 
 // 代码生成处理
-
+// 处理内联 style 样式
+const createStyle = (style) => {
+  if(!style) { return '' }
+  let result = ' style="'
+  _ValMap(style, (item, key) => {
+    const className = _GetVarFormHump(key)
+    result += `${className}: ${item};`
+  })
+  return result + '"'
+}
 // 处理 class 属性
 const createClass = (classList) => {
   let result = ''
-  if(_getDataType(classList) === 'string') {
+  if(_GetDataType(classList) === 'string') {
     result += ` class="${classList}"`
-  } else if(_getDataType(classList) === 'array') {
+  } else if(_GetDataType(classList) === 'array') {
     let res = ''
-    _valMap(classList, (item, index) => {
+    _ValMap(classList, (item, index) => {
       index === 0 ? res += item : res += ` ${item}`
     })
     result += ` class="${res}"`
@@ -55,9 +65,9 @@ const createClass = (classList) => {
 // 处理 value 等属性
 const createAttr = (attr, data, other) => {
   let result = ''
-  _getDataType(attr) === 'object' ? _valMap(attr, (item, key) => { item && (result += ` ${key}="${item}"`) }) : void 0
-  _getDataType(data) === 'object' ? _valMap(data, (item, key) => { item && (result += ` data-${key}="${item}"`) }) : void 0
-  _getDataType(other) === 'string' && other ? result += ` ${other}` : void 0
+  _GetDataType(attr) === 'object' ? _ValMap(attr, (item, key) => { item && (result += ` ${key}="${item}"`) }) : void 0
+  _GetDataType(data) === 'object' ? _ValMap(data, (item, key) => { item && (result += ` data-${key}="${item}"`) }) : void 0
+  _GetDataType(other) === 'string' && other ? result += ` ${other}` : void 0
   return result
 }
 // 处理 html 标签
@@ -66,20 +76,30 @@ const createTag = (arr, tag, attr, content) => {
     return `<${tag}${attr} />` }
   else { return `<${tag}${attr}>${content || ""}</${tag}>` }
 }
+// 添加 data-lw 用于追踪 dom 元素
+const addDataIndex = (val, data) => {
+  if(data.lw) { return '不可以占用 data-lw 提示' }
+  return ` data-lw="${val}"`
+}
 // 创建 html 结构
-const createHtmlLayout = layout => {
+const createHtmlLayout = (layout, attrArr) => {
   let result = ''
-  _valMap(layout, item => {
+  _ValMap(layout, (item, index) => {
+
     let attr = '', content = ''
-    attr += createClass(item.class)
-    attr += createAttr(item.attr, item.data, item.other)
-    content += item.text
-    if(item.children) { content += createHtmlLayout(item.children) }
-    result += createTag(Config.autoCloseTag, item.el, attr, content)
+    const attrData = attrArr[item.key]
+
+    attr += createClass(attrData.class)
+    attr += createAttr(attrData.attr, attrData.data, attrData.other)
+    attr += createStyle(attrData.style)
+    attr += addDataIndex(item.key, attrData.data)
+    content += attrData.text
+    if(item.children) { content += createHtmlLayout(item.children, attrArr) }
+    result += createTag(Config.autoCloseTag, attrData.el, attr, content)
   })
   return result
 }
-exports._CreateHtmlCode = async(layout) => createHtmlLayout(layout)
+exports._CreateHtmlCode = async(layout, attrArr) => createHtmlLayout(layout, attrArr)
 
 const CreateCssCode = async(code) => {}
 exports._CreateCssCode = (code) => CreateCssCode(code)
@@ -94,7 +114,7 @@ const HTMLMinify = async(code, config = Config.HtmlMinify) => {
 exports._HTMLMinify = (code, config) => HTMLMinify(code, config)
 
 const JSCodeMinify = async(code, config = Config.JsMinify) => {
-  if(_getDataType(code) !== 'string') { return false }
+  if(_GetDataType(code) !== 'string') { return false }
   const result = UglifyJS.minify(code, config)
   return result
 }
@@ -102,21 +122,21 @@ exports._JSCodeMinify = (code, config) => JSCodeMinify(code, config)
 
 
 const JSFileMinify = async(files, config = Config.JsMinify) => {
-  if(_getDataType(files) !== 'array') { return false }
+  if(_GetDataType(files) !== 'array') { return false }
   const result = UglifyJS.minify(files, config)
   return result
 }
 exports._JSFileMinify = (files, config) => JSFileMinify(files, config)
 
 const CSSCodeMinify = async(code, config = Config.CssMinify) => {
-  if(_getDataType(code) !== 'string') { return false }
+  if(_GetDataType(code) !== 'string') { return false }
   const result = UglifyCSS.processString(code, config)
   return result
 }
 exports._CSSCodeMinify = (code, config) => CSSCodeMinify(code, config)
 
 const CSSFileMinify = async(files, config = Config.CssMinify) => {
-  if(_getDataType(files) !== 'array') { return false }
+  if(_GetDataType(files) !== 'array') { return false }
   const result = UglifyCSS.processFiles(files, config)
   return result
 }

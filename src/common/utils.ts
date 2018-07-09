@@ -2,7 +2,7 @@
  * @Author: WenJW
  * @Date: 2018-07-09 14:15:17
  * @Last Modified by: WenJW
- * @Last Modified time: 2018-07-09 14:51:34
+ * @Last Modified time: 2018-07-09 21:02:35
  * @description
  */
 
@@ -11,9 +11,14 @@
  * @param {*} data
  * @returns
  */
-export const _GetDataType = (data) => {
-  return Object.prototype.toString.call(data).toLowerCase().replace(/^\[object (\w+)\]$/, '$1')
-}
+export const _GetDataType = (data) => Object.prototype.toString.call(data).toLowerCase().replace(/^\[object (\w+)\]$/, '$1')
+
+/**
+ * @description fontSize => font-size
+ * @param {*} name 要处理的字符
+ * @param {*} unit 连接符
+ */
+export const getVarFormHump = (name, unit = '-') => name.replace(/([A-Z])/g, `${unit}$1`).toLowerCase()
 
 /**
  * @description
