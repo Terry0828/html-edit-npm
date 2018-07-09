@@ -13,7 +13,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import Fetch from '../../common/request'
+import { _Post } from '../../common/request'
+import { _GetHash } from '../../common/utils'
+
+console.log(_GetHash(12))
 
 @Component({
   name: 'Home',
@@ -110,6 +113,7 @@ export default class Home extends Vue {
   }
 
   created () {
+    
   }
   mounted () {
   }
@@ -121,24 +125,25 @@ export default class Home extends Vue {
     console.log(JSON.stringify(this.data))
 
     params.append('html', JSON.stringify(this.data))
-    Fetch._Post('/api/add', params)
+    _Post('/api/add', params)
   }
 
   test () {
     const params = new URLSearchParams()
+
     console.log(JSON.stringify(this.data.data))
     params.append('html', JSON.stringify(this.data.data.layout))
-    Fetch._Post('/api/test', params).then(res => console.log(res))
+    _Post('/api/test', params).then(res => console.log(res))
   }
 
   zip () {
-    Fetch._Post('/api/zip')
+    _Post('/api/zip')
   }
   build () {
     const params = new URLSearchParams()
 
     params.append('html', JSON.stringify(this.data))
-    Fetch._Post('/api/build', params)
+    _Post('/api/build', params)
   }
 }
 </script>

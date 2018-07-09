@@ -1,13 +1,19 @@
+/*
+ * @Author: WenJW
+ * @Date: 2018-07-09 14:15:17
+ * @Last Modified by: WenJW
+ * @Last Modified time: 2018-07-09 14:51:34
+ * @description
+ */
 
 /**
  * @description 获取数据类型
  * @param {*} data
  * @returns
  */
-const getDataType = (data) => {
+export const _GetDataType = (data) => {
   return Object.prototype.toString.call(data).toLowerCase().replace(/^\[object (\w+)\]$/, '$1')
 }
-exports._GetDataType = data => getDataType(data)
 
 /**
  * @description
@@ -16,23 +22,22 @@ exports._GetDataType = data => getDataType(data)
  * @param {boolean} order 正序遍历(true)还是倒序遍历
  * @returns {fn}
  */
-const valMap = (data, fn, order = true) => {
-  if (getDataType(data) === 'array') {
+export const _ValMap = (data, fn, order: boolean = true) => {
+  if (_GetDataType(data) === 'array') {
     order ? null : data.reverse()
     for (let i = 0, len = data.length; i < len; i++) {
       const val = fn(data[i], i)
       if (val === false) { return }
     }
-  } else if (getDataType(data) === 'object') {
+  } else if (_GetDataType(data) === 'object') {
     const keys = Object.keys(data)
     order ? null : keys.reverse()
     for (let i = 0, len = keys.length; i < len; i++) {
       const val = fn(data[keys[i]], keys[i], i)
       if (val === false) { return }
     }
-  } else { return 'error' }
+  } else { throw new Error(`then type is error![${data}: ${_GetDataType(data)}]`) }
 }
-exports._ValMap = (data, fn, order) => valMap(data, fn, order)
 
 // hash
 const pad = (hash, len) => {
@@ -84,4 +89,4 @@ const foldObject = (hash, o, seen) => {
  * @param {*} o
  * @returns
  */
-exports._GetHash = (o) => pad(foldValue(0, o, '', []).toString(16), 8)
+export const _GetHash = (o) => pad(foldValue(0, o, '', []).toString(16), 8)
