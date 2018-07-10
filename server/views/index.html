@@ -8,21 +8,23 @@
   <meta name="keywords" content="<%= key %>" >
   <meta name="author" content="WenJW&lt;17648253663@163.com&gt;" >
   <link type="image/x-icon" rel="shortcut icon" href="./favicon.ico"/>
+  <link rel="stylesheet" href="./css/common/default.css">
   <link rel="stylesheet" href="./css/index.css">
   <title><%= title %></title>
   
   <!-- 样式文件 -->
   <%- linkCSS %>
-  <!-- 初始化样式 -->
-  <% include ./styleInit.html %>
+
   <% if(mobile === "app") { %>
   <!-- 如果移动端增加 rem 适配 -->
   <% include ./rem.html %>
   <% } %>
 </head>
 <body>
-  <%= layout %>
+  <%- layout %>
 
+<!-- 必备的 js 文件 -->
+<script src="./js/common/jquery.js"></script>
 <!-- js 文件 -->
 <%- linkJS %>
 <script src="./js/index.js"></script>
