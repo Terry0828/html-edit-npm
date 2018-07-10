@@ -14,8 +14,7 @@
   <div class="home">
     <el-button type="primary" @click="add">生成</el-button>
     <el-button type="primary" @click="zip">压缩</el-button>
-    <el-button type="primary" @click="build">填充 Html</el-button>
-    <el-button type="primary" @click="test">生成 Html Code</el-button>
+    <el-button type="primary" @click="build">生成 page</el-button>
 
     <div id="jsoneditor">
     </div>
@@ -108,7 +107,7 @@ export default class Home extends Vue {
         },
         '4a96284b': {
           el: 'img',
-          class: 'content',
+          class: ['content'],
           data: {
             key: 'three'
           }
@@ -182,18 +181,8 @@ export default class Home extends Vue {
             }
           }
         }
-      },
-      style: `
-        body { color: yellow;background: blue; }
-      `,
-      // style: {d
-      //   body: {
-      //     color: '',
-      //   }
-      // },
-      js: `console.log('sda');
-      var absolutt = 0;
-      var b = 0;`
+      }
+
     }
   }
 
@@ -213,21 +202,17 @@ export default class Home extends Vue {
     _Post('/api/add', params)
   }
 
-  test () {
+  build () {
     const params = new URLSearchParams()
 
     params.append('data', JSON.stringify(this.data))
-    _Post('/api/test', params).then(res => console.log(res))
+    _Post('/api/build', params).then(res => {
+      console.log(res.data)
+    })
   }
 
   zip () {
     _Post('/api/zip')
-  }
-  build () {
-    const params = new URLSearchParams()
-
-    params.append('html', JSON.stringify(this.data))
-    _Post('/api/build', params)
   }
 }
 </script>
