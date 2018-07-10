@@ -2,7 +2,7 @@
  * @Author: WenJW
  * @Date: 2018-07-06 17:00:25
  * @Last Modified by: WenJW
- * @Last Modified time: 2018-07-09 20:53:55
+ * @Last Modified time: 2018-07-10 15:38:54
  * @description
  */
 
@@ -39,27 +39,28 @@ exports._jsLink = (arr) => jsLink(arr)
 
 // 代码生成处理
 // 处理内联 style 样式
-const createStyle = (style) => {
-  if(!style) { return '' }
-  let result = ' style="'
+const createStyle = (style, hash) => {
+  if(!style) { return { name: '', code: '' } }
+  let result = `.style-${hash} {`
   _ValMap(style, (item, key) => {
     const className = _GetVarFormHump(key)
     result += `${className}: ${item};`
   })
-  return result + '"'
+  return {
+    name: `style-${hash}`,
+    code: result + '}'
+  }
 }
-// 处理 class 属性
+// 处理 class 属性，必须是 array
 const createClass = (classList) => {
   let result = ''
-  if(_GetDataType(classList) === 'string') {
-    result += ` class="${classList}"`
-  } else if(_GetDataType(classList) === 'array') {
-    let res = ''
-    _ValMap(classList, (item, index) => {
-      index === 0 ? res += item : res += ` ${item}`
-    })
-    result += ` class="${res}"`
-  }
+  if(_GetDataType(classList) !== 'array') { return }
+
+  let res = ''
+  _ValMap(classList, (item, index) => {
+    index === 0 ? res += item : res += ` ${item}`
+  })
+  result += ` class="${res}"`
   return result
 }
 // 处理 value 等属性
@@ -83,21 +84,31 @@ const addDataIndex = (val, data) => {
 }
 // 创建 html 结构
 const createHtmlLayout = (layout, attrArr) => {
-  let result = ''
+  let result = '', style = ''
   _ValMap(layout, (item, index) => {
 
     let attr = '', content = ''
     const attrData = attrArr[item.key]
-
+    const styleObj = createStyle(attrData.style, item.key)
+    
+    // 样式单独抽离出来，后续生成一个 css 文件
+    style += styleObj.code
+    styleObj.name && attrData.class.push(styleObj.name)
     attr += createClass(attrData.class)
     attr += createAttr(attrData.attr, attrData.data, attrData.other)
-    attr += createStyle(attrData.style)
+    // attr += createStyle(attrData.style)
     attr += addDataIndex(item.key, attrData.data)
     content += attrData.text
-    if(item.children) { content += createHtmlLayout(item.children, attrArr) }
+    if(item.children) { 
+      const childHtmlObj = createHtmlLayout(item.children, attrArr)
+      content += childHtmlObj.layout
+      style += childHtmlObj.style
+      console.log('childHtmlObj', childHtmlObj)
+    }
     result += createTag(Config.autoCloseTag, attrData.el, attr, content)
   })
-  return result
+  console.log('result', result)
+  return { layout: result, style }
 }
 exports._CreateHtmlCode = async(layout, attrArr) => createHtmlLayout(layout, attrArr)
 
@@ -106,6 +117,8 @@ exports._CreateCssCode = (code) => CreateCssCode(code)
 
 const CreateJSCode = async(code) => {}
 exports._CreateJSCode = (code) => CreateJSCode(code)
+
+
 
 // 代码压缩处理
 const HTMLMinify = async(code, config = Config.HtmlMinify) => {

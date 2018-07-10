@@ -104,8 +104,9 @@ exports._createFile = (src, content, options) => createFile(src, content, option
 /**
  * @description 删除文件夹、文件
  * @param {*} src
+ * @param {*} rmSelf 是否删除本身文件夹，默认删除 true
  */
-const deleteFolder = src => {
+const deleteFolder = (src, rmSelf = true) => {
   let files = []
   if(fs.existsSync(src)) {
     files = fs.readdirSync(src)
@@ -115,10 +116,10 @@ const deleteFolder = src => {
         return deleteFolder(curPath)
       } else { return fs.unlinkSync(curPath) }
     })
-    return fs.rmdirSync(src)
+    return rmSelf === false ? null : fs.rmdirSync(src)
   }
 }
-exports._deleteFolder = async(src) => deleteFolder(src)
+exports._deleteFolder = async(src, self) => deleteFolder(src, self)
 
 const deleteFile = async(src) => {
   return fs.unlinkSync(src)
