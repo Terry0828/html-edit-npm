@@ -1,7 +1,6 @@
 
 export default {
   state: {
-    autoCloseTag: ['br', 'hr', 'area', 'base', 'img', 'input', 'link', 'meta', 'basefont', 'param', 'col', 'frame', 'embed', 'keygen', 'source', 'command', 'track', 'wbr'] // 自闭和标签
   },
   mutations: {
     /**

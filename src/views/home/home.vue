@@ -2,7 +2,7 @@
 <style scoped lang="scss">
 @import '../../assets/css/index';
 .hello {
-  color: #787878;
+  color: orchid;
 }
 .json-edit-box {
   width: 90%;
@@ -12,10 +12,8 @@
 
 <template>
   <div class="home">
-    <el-button type="primary" @click="add">生成</el-button>
-    <el-button type="primary" @click="zip">压缩</el-button>
     <el-button type="primary" @click="build">生成 page</el-button>
-
+    <lw-view />
     <div id="jsoneditor">
     </div>
   </div>
@@ -25,16 +23,22 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { _Post } from '../../common/request'
-import { _GetHash } from '../../common/utils'
+import {
+  _GetHash,
+  _HandleArrTree } from '../../common/utils'
 
 console.log(_GetHash(1))
+
+import View from '../view/view.vue'
 
 @Component({
   name: 'Home',
   components: {
+    'lw-view': View
   }
 })
 export default class Home extends Vue {
+  app: any = this.$store.state.AppVuex
   data: any = {
     other: {
       index: 0
@@ -124,12 +128,6 @@ export default class Home extends Vue {
         0: {
           el: 'div',
           class: ['wrap'],
-          attr: {
-            id: '',
-            name: '',
-            value: '',
-          },
-          other: '',
           data: {
             key: 'one'
           },
@@ -138,26 +136,13 @@ export default class Home extends Vue {
             0: {
               el: 'p',
               class: ['title'],
-              attr: {
-                id: '',
-                name: '',
-                value: '',
-              },
-              other: '',
               data: {
                 key: 'two'
               },
-              text: '',
               children: {
                 0: {
                   el: 'span',
                   class: ['text'],
-                  attr: {
-                    id: '',
-                    name: '',
-                    value: '',
-                  },
-                  other: '',
                   data: {
                     key: 'span'
                   },
@@ -168,16 +153,9 @@ export default class Home extends Vue {
             1: {
               el: 'img',
               class: ['content'],
-              attr: {
-                id: '',
-                name: '',
-                value: '',
-              },
-              other: '',
               data: {
                 key: 'three'
               },
-              text: ''
             }
           }
         }
@@ -187,19 +165,24 @@ export default class Home extends Vue {
   }
 
   created () {
-    
+    _HandleArrTree(this.data.html.layout, (item, index) => {
+      if(item.key === '1a96284b') {
+        // console.log(item)
+        return true }
+    })
+    // this._upData({index: 1})
+
+    this.$store.commit('_appUpData', {
+      data: { d: 'no' },
+      keys: ['a', 'b', 'c']
+    })
+    console.log(this.app.a)
   }
   mounted () {
   }
-
-  add () {
-    const params = new URLSearchParams()
-
-    console.log(this.data)
-    console.log(JSON.stringify(this.data))
-
-    params.append('html', JSON.stringify(this.data))
-    _Post('/api/add', params)
+  _upData(data: any) {
+    // 更新 Vuex 数据状态
+    this.$store.commit('_appUpData', data)
   }
 
   build () {
@@ -209,10 +192,6 @@ export default class Home extends Vue {
     _Post('/api/build', params).then(res => {
       console.log(res.data)
     })
-  }
-
-  zip () {
-    _Post('/api/zip')
   }
 }
 </script>

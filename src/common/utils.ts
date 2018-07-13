@@ -2,7 +2,7 @@
  * @Author: WenJW
  * @Date: 2018-07-09 14:15:17
  * @Last Modified by: WenJW
- * @Last Modified time: 2018-07-09 21:02:35
+ * @Last Modified time: 2018-07-10 19:12:57
  * @description
  */
 
@@ -11,7 +11,7 @@
  * @param {*} data
  * @returns
  */
-export const _GetDataType = (data) => Object.prototype.toString.call(data).toLowerCase().replace(/^\[object (\w+)\]$/, '$1')
+export const _GetDataType = (data): string => Object.prototype.toString.call(data).toLowerCase().replace(/^\[object (\w+)\]$/, '$1')
 
 /**
  * @description fontSize => font-size
@@ -42,6 +42,22 @@ export const _ValMap = (data, fn, order: boolean = true) => {
       if (val === false) { return }
     }
   } else { throw new Error(`then type is error![${data}: ${_GetDataType(data)}]`) }
+}
+
+/**
+ * @description 遍历树状结构
+ * @param {[any]} tree 要遍历的数组
+ * @param {*} fn 每一个循环项要执行的操作，item、index 参数，return true 跳出循环(找到数据) return undefined(没有 return) 表示继续递归遍历
+ * @param {string} [str='children'] 表示数据结构，item[str]，递归用，暂不支持多层嵌套
+ */
+export const _HandleArrTree = (tree: [any], fn, str = 'children') => {
+  _ValMap(tree, (item, index) => {
+    const res = fn(item, index)
+    if (res === true) { return false
+    } else if (res === void 0) {
+      return _HandleArrTree(item[str], fn)
+    }
+  })
 }
 
 // hash
@@ -94,4 +110,4 @@ const foldObject = (hash, o, seen) => {
  * @param {*} o
  * @returns
  */
-export const _GetHash = (o) => pad(foldValue(0, o, '', []).toString(16), 8)
+export const _GetHash = (o): string => pad(foldValue(0, o, '', []).toString(16), 8)
