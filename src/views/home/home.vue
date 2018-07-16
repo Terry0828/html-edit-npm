@@ -12,7 +12,8 @@
 
 <template>
   <div class="home">
-    <el-button type="primary" @click="build">生成 page</el-button>
+    <!-- <el-button type="primary" @click="build">生成 page</el-button> -->
+    <lw-shape />
     <lw-view />
     <div id="jsoneditor">
     </div>
@@ -30,11 +31,13 @@ import {
 console.log(_GetHash(1))
 
 import View from '../view/view.vue'
+import Shape from '../shape/shape.vue'
 
 @Component({
   name: 'Home',
   components: {
-    'lw-view': View
+    'lw-view': View,
+    'lw-shape': Shape
   }
 })
 export default class Home extends Vue {
@@ -83,7 +86,7 @@ export default class Home extends Vue {
             key: 'one'
           },
           style: {
-            background: 'orange',
+            background: 'red',
             fontWeight: 500
           },
           text: 'div1'

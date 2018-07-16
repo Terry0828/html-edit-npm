@@ -6,6 +6,7 @@ const config = require('../config')
 const {
   _readFile,
   _createFile,
+  _createFolder,
   _copyFolder,
   _copyFile,
   _deleteFolder } = require('../utils/file')
@@ -25,7 +26,8 @@ apiRoutes.post('/save', (req, res) => {
 
 const handleFile = () => {
   // 处理文件
-  return _copyFile(config.path.module + '/favicon.ico', config.path.build + '/favicon.ico')
+  return _createFolder(config.path.build)
+  .then(() => _copyFile(config.path.module + '/favicon.ico', config.path.build + '/favicon.ico'))
   .then(() => _copyFolder(config.path.module + '/js', config.path.build + '/js'))
   .then(() => _copyFolder(config.path.module + '/css', config.path.build + '/css'))
   .then(() => _copyFolder(config.path.module + '/static', config.path.build + '/static'))

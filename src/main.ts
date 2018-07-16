@@ -10,10 +10,10 @@ import 'babel-polyfill'
 import ElementUI from 'element-ui'
 Vue.use(ElementUI)
 
-import './assets/css/default.scss';
-import 'element-ui/lib/theme-chalk/index.css';
+import './assets/css/default.scss'
+import 'element-ui/lib/theme-chalk/index.css'
 // 字体图标
-import './common/iconfont.js'
+import './assets/font/iconfont.css'
 
 Vue.config.productionTip = false
 

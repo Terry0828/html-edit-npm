@@ -16,7 +16,7 @@ const compressedFile = (files, params) => {
   const archive = archiver(params.type)
   const output = fs.createWriteStream(path.join(params.result, params.outputName))
   archive.pipe(output)
-  
+
   files.map((item, index) => {
     archive.append(fs.createReadStream(item.url), { name: item.name })
   })
@@ -148,7 +148,7 @@ exports._getFileType = src => getFileType(src)
  * @returns
  */
 const readFile = async(src, size = 1024) => {
-  if(!fs.statSync(src).isFile()) { return false }
+  if(!fs.statSync(src).isFile()) { return fs.mkdirSync(src) }
   const buf = new Buffer(size)
   const fd = fs.openSync(src, 'r+')
   const bytes = fs.readSync(fd, buf, 0, buf.length, 0)
@@ -179,9 +179,10 @@ exports._copyFile = async(src, dst) => copyFile(src, dst)
  */
 const copyFolder = (src, dst) => {
   const paths = fs.readdirSync(src)
-  if(!fs.existsSync(dst)){ fs.mkdirSync(dst) }
+  if(!fs.existsSync(dst)){
+    fs.mkdirSync(dst) }
   paths.map(_p => {
-    if(!/\./.test(_p)){
+    if(!/\./.test(_p)) {
       let p = path.join(dst, _p)
       if(!fs.existsSync(p)){ fs.mkdirSync(p) }
       return copyFolder(path.join(src,_p), p)

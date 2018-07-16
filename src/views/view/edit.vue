@@ -1,11 +1,16 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
+@import '../../assets/css/common';
+.edit {
+  width: 320px;
+  height: 568px;
+  margin: 0 auto;
+  background: #fff;
+}
 </style>
 
 <template>
-  <div class="view">
-    <lw-edit />
+  <div class="edit">
   </div>
 </template>
 
@@ -13,15 +18,12 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 
-import Edit from './edit.vue'
-
 @Component({
-  name: 'EditView',
+  name: 'Edit',
   components: {
-    'lw-edit': Edit
   }
 })
-export default class EditView extends Vue {
+export default class Edit extends Vue {
   app: any = this.$store.state.AppVuex
 
   created () {

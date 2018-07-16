@@ -2,7 +2,7 @@
  * @Author: WenJW
  * @Date: 2018-07-06 17:00:25
  * @Last Modified by: WenJW
- * @Last Modified time: 2018-07-10 15:38:54
+ * @Last Modified time: 2018-07-15 09:43:19
  * @description
  */
 
@@ -103,11 +103,9 @@ const createHtmlLayout = (layout, attrArr) => {
       const childHtmlObj = createHtmlLayout(item.children, attrArr)
       content += childHtmlObj.layout
       style += childHtmlObj.style
-      console.log('childHtmlObj', childHtmlObj)
     }
     result += createTag(Config.autoCloseTag, attrData.el, attr, content)
   })
-  console.log('result', result)
   return { layout: result, style }
 }
 exports._CreateHtmlCode = async(layout, attrArr) => createHtmlLayout(layout, attrArr)
