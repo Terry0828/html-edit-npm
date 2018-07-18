@@ -1,0 +1,1 @@
+console.log("sda");var absolutt=0,b=0;
