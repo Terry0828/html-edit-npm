@@ -4,10 +4,10 @@ const path = require('path')
 
 module.exports = {
   // dev
-  port: 10013,
+  port: 10015,
   host: 'local.dev.smartstudy.com',
   server: {
-    port: 10014, // 本地 api 的端口
+    port: 10016, // 本地 api 的端口
   },
   // 线上
   build: {}

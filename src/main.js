@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import ReduxThunk from 'redux-thunk'   // 中间件，有了这个就可以支持异步action
-import RootReducer from './reducers' // 所有的reducer
 
 import 'babel-polyfill'
 
-import CreateRouter from './router/index'
+import getStore from './store'
+import CreateRouter from './router'
 
 export default class App extends Component {
   constructor(props) {
@@ -37,15 +35,7 @@ export default class App extends Component {
 }
 
 // 创建store
-const store = createStore(RootReducer, applyMiddleware(ReduxThunk))
-
-store.dispatch({
-  type: 'add',
-  str: 'csss',
-  addd: '00000'
-})
-console.log(store.getState('add'))
-
+const store = getStore()
 ReactDOM.render(
   <Provider store={store}>
     <App />

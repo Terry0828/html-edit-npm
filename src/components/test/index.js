@@ -150,16 +150,7 @@ class View extends Component {
   render() {
     return (<div>
       <p onClick={() => {
-        const { dispatch, addd } = this.props
-        dispatch({
-          type: 'add',
-          addd: '88888'
-        })
-        console.log(addd)
-        // console.log(getState('addd'))
-        // console.log(this.props.history)
-        // this.build()
-        // this.props.history.goBack()
+        console.log(this.props.home)
       }}>About</p>
       <p>{this.state.mes.msg}</p>
     </div>)
@@ -169,5 +160,5 @@ class View extends Component {
 View.propTypes = {
 }
 export default connect(state => ({
-  addd: state.addd
+  home: state.home,
 }))(View)
