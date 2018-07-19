@@ -9,6 +9,7 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -59,6 +60,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       filename: 'index.html',
       template: 'index.html',
       inject: true
+    }),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: utils.assetsPath('css/[name].[contenthash:12].css'),
+      // chunkFilename: "[id].css"
+      allChunks: true,
     }),
     // copy custom static assets
     // new CopyWebpackPlugin([

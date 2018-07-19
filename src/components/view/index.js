@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 
+// import 'antd/dist/antd.css'
+import './index.css'
+
+import { Button } from 'antd'
 class View extends Component {
   constructor(props) {
     super(props)
@@ -40,6 +44,7 @@ class View extends Component {
   render () {
     return (
       <div>
+      <Button>Default</Button>
         <p className="view">list:{this.props.home.list}</p>
         <p>{this.props.examinationId}</p>
         <p style={{...this.btnSty()}} onClick={() => { this.goUrl() }}>to home</p>
