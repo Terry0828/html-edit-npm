@@ -42,9 +42,6 @@ exports.cssLoaders = function (options) {
         })
       })
     }
-    console.log('**************')
-    console.log([MiniCssExtractPlugin.loader].concat(loaders))
-    console.log('**************')
     return [MiniCssExtractPlugin.loader].concat(loaders)
   }
 

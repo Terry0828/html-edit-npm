@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 
-// import 'antd/dist/antd.css'
-import './index.css'
+import './index.less'
 
 import { Button } from 'antd'
 class View extends Component {
