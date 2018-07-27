@@ -6,7 +6,6 @@ import { Provider } from 'react-redux'
 import getStore from './script/store'
 import CreateRouter from './script/router'
 
-import './assets/css/common.scss'
 import './assets/css/index.scss'
 // antd
 // import 'antd/dist/antd.css'

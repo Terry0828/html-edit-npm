@@ -1,1 +1,35 @@
-@import './color.scss';
+@mixin border($radius: 0, $color: rgba(0,0,0,0.1), $type: solid) {
+  position: relative;
+  border-radius: $radius;
+  &:after {
+    position: absolute;
+    content: '';
+    top: -50%;
+    bottom: -50%;
+    left: -50%;
+    right: -50%;
+    transform: scale(0.5);
+    border: 1px $type $color;
+    border-radius: $radius * 2;
+  }
+}
+
+@mixin border_one($posit: 3, $Bcolor:rgba(0,0,0,0.1), $type:solid) {
+// 1上下都有，2上border，3下border
+position: relative;
+  &:after {
+    position: absolute;
+    content: '';
+    top: -50%;
+    bottom: -50%;
+    left: -50%;
+    right: -50%;
+    transform: scale(0.5);
+    @if ($posit == 2 and $posit == 1) {
+      border-top: 1px $type $Bcolor;
+    }
+    @if ($posit == 3 and $posit == 1) {
+      border-bottom: 1px $type $Bcolor;
+    }
+  }
+}

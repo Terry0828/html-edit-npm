@@ -2,24 +2,63 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import { Menu, Dropdown, Button } from 'antd'
+
+import { screenArr } from '../../../common/constant'
+
 class View extends Component {
   constructor(props) {
     super(props)
-
+    this.state = {
+      ...this.props.view,
+    }
+  }
+  componentWillMount() {
   }
   componentDidMount() {
-    console.log(this.props.view)
-    console.log(this.props.home)
+  }
+  changeNowDevice(data) {
+    this.setState({
+      ...data
+    })
+  }
+  getDeviceList() {
+    return (<Menu>
+      {
+        screenArr.map((item, index) => {
+          return <Menu.Item key={'device-' + index}>
+            <p
+            onClick={ () => this.changeNowDevice(item)}>
+              {item.type}
+            </p>
+          </Menu.Item>
+        })
+      }
+    </Menu>)
   }
   render() {
-    const { view } = this.props
+    const { wid, hei, type } = this.state
     return (
-      <div
-      style={{
-        width: `${view.wid}px`,
-        height: `${view.hei}px`,
-      }}
-      className="view-detail"></div>
+      <div className="view-container">
+        <div className="top-box noSelect">
+          <span className="size-input">{wid}</span>
+          <span className="size-symbol">*</span>
+          <span className="size-input">{hei}&nbsp;-&nbsp;</span>
+          <Dropdown
+          trigger={['click']}
+          overlay={this.getDeviceList()}
+          placement="bottomLeft">
+            <span className="device-show">{type}</span>
+          </Dropdown>
+        </div>
+        <div
+        style={{
+          width: `${wid}px`,
+          height: `${hei}px`,
+        }}
+        className="view-detail"></div>
+        <div className="right-box"></div>
+      </div>
     )
   }
 }

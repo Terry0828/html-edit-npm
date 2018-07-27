@@ -1,5 +1,5 @@
 @import '../../../assets/css/color';
-
+@import '../../../assets/css/common';
 .home-wrap {
   position: absolute;
   top: 0;
@@ -9,13 +9,35 @@
   background: $B_color;
 
   // view
-  & .view-detail {
+  & .view-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #fff;
+    & .top-box {
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+
+      & .size-input {
+        display: inline-block;
+        text-align: center;
+        background: none;
+      }
+      & .size-symbol {
+        display: inline-block;
+        padding: 0 10px;
+      }
+      & .device-show {
+        cursor: pointer;
+      }
+    }
+    & .view-detail {
+      transition: all .5s ease;
+      background: #fff;
+    }
   }
+  
   // tool
   & .tool-detail {
     height: 55px;
