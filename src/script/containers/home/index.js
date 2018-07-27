@@ -2,7 +2,12 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 
+import View from './view/view'
+import Tool from './tool/tool'
+
 import { Button } from 'antd'
+
+import './index.scss'
 class Home extends Component {
   constructor(props) {
     super(props)
@@ -11,8 +16,9 @@ class Home extends Component {
   }
   render () {
     return (
-      <div>
-        home
+      <div className="home-wrap">
+        <Tool />
+        <View />
       </div>
     )
   }
