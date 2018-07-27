@@ -1,3 +1,5 @@
-
-$color_text: rgb(26,26,26);
-$text_color: red !global;
+@import './color';
+body {
+  background: $B_color;
+  color: $T_color;
+}

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { _Post } from '../../common/request'
+import { _Post } from '../../utils/request'
 
 class View extends Component {
   constructor(props) {
