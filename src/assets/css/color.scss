@@ -2,15 +2,19 @@
 
 // 文本
 
-$T_color: rgba(255,255,255, 0.4);
-$T_Active: rgba(255,255,255, 0.6);
+$T_color: rgb(113,113,113);
+$T_Active: rgba(0,0,0, 0.6);
+// $T_color: rgba(255,255,255, 0.4);
+// $T_Active: rgba(255,255,255, 0.6);
 
 
 // 背景
-
-$B_color: rgb(26,26,26);
-$B_color_top: rgb(38,38,38);
+$B_color: rgb(236,236,236);
+$B_color_top: rgba(0,0,0,.1);
+// $B_color: rgb(26,26,26);
+// $B_color_top: rgb(38,38,38);
 
 
 // other
+
 $Border_color: rgb(103,103,103);

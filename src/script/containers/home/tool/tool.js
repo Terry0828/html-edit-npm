@@ -5,15 +5,16 @@ import { connect } from 'react-redux'
 class Tool extends Component {
   constructor(props) {
     super(props)
-
   }
   render() {
     return (
-      <div className="tool-detail"></div>
+      <div className="tool-container">
+        <div className=""></div>
+      </div>
     )
   }
 }
 
 export default connect(state => ({
-  home: state.home,
+  view: state.view,
 }))(Tool)

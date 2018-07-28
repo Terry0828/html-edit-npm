@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { Menu, Dropdown, Button } from 'antd'
+import {
+  Menu,
+  Dropdown,
+  Button } from 'antd'
 
-import { screenArr } from '../../../common/constant'
+import { screenArr, scaleArr } from '../../../common/constant'
 
 class View extends Component {
   constructor(props) {
@@ -28,7 +31,8 @@ class View extends Component {
         screenArr.map((item, index) => {
           return <Menu.Item key={'device-' + index}>
             <p
-            onClick={ () => this.changeNowDevice(item)}>
+            className="noSelect"
+            onClick={ () => this.setState({ ...item })}>
               {item.type}
             </p>
           </Menu.Item>
@@ -36,19 +40,43 @@ class View extends Component {
       }
     </Menu>)
   }
+  getScaleList() {
+    return (<Menu>
+      {
+        scaleArr.map((item, index) => {
+          return <Menu.Item key={'scale-' + index}>
+            <p
+            className="noSelect"
+            onClick={ () => this.setState({ scale: item })}>
+              {item}
+            </p>
+          </Menu.Item>
+        })
+      }
+    </Menu>)
+  }
   render() {
-    const { wid, hei, type } = this.state
+    const { wid, hei, type, scale } = this.state
     return (
-      <div className="view-container">
+      <div className="view-container"
+      style={{
+        transform: `translate(-50%, 0) scale(${Number(scale.replace('%', '')) / 100})`
+      }}>
         <div className="top-box noSelect">
           <span className="size-input">{wid}</span>
           <span className="size-symbol">*</span>
-          <span className="size-input">{hei}&nbsp;-&nbsp;</span>
+          <span className="size-input">{hei}</span>
           <Dropdown
           trigger={['click']}
           overlay={this.getDeviceList()}
           placement="bottomLeft">
-            <span className="device-show">{type}</span>
+            <span className="device-show">&nbsp;-&nbsp;{type}</span>
+          </Dropdown>
+          <Dropdown
+          trigger={['click']}
+          overlay={this.getScaleList()}
+          placement="bottomLeft">
+            <span className="device-show">&nbsp;-&nbsp;{scale}</span>
           </Dropdown>
         </div>
         <div
