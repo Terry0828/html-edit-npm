@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import View from './view/view'
 import Tool from './tool/tool'
+import Browse from './browse/browse'
 
 import { Button } from 'antd'
 
@@ -19,6 +20,7 @@ class Home extends Component {
       <div className="home-wrap">
         <Tool />
         <View />
+        <Browse />
       </div>
     )
   }

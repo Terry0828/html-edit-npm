@@ -44,8 +44,17 @@
   
   // tool
   & .tool-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 55px;
     width: 100%;
     background: $B_color_top;
+  }
+  // browse
+  & .browse-container {
+    height: calc(100% - 55px);
+    width: 200px;
+    background: pink;
   }
 }

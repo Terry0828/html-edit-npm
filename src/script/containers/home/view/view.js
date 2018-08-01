@@ -84,7 +84,8 @@ class View extends Component {
           width: `${wid}px`,
           height: `${hei}px`,
         }}
-        className="view-detail"></div>
+        className="view-detail">
+        </div>
         <div className="right-box"></div>
       </div>
     )
