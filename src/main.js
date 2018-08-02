@@ -6,19 +6,29 @@ import { Provider } from 'react-redux'
 import getStore from './script/store'
 import CreateRouter from './script/router'
 
+import { _Get } from './script/utils/request'
+
 import './assets/css/dragula.css'
 import './assets/css/index.scss'
 // antd
 // import 'antd/dist/antd.css'
+
 export default class App extends Component {
   constructor(props) {
     super(props)
   }
+  componentWillMount() {
+    _Get('/api/init')
+    .then(res => {
+      console.log(res)
+    })
+  }
+  
   render() {
     return (
       <div className="wrap">
         <Router>
-          {CreateRouter()}
+          {CreateRouter('view')}
         </Router>
       </div>
     )

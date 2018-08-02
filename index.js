@@ -5,14 +5,10 @@ const bodyParser = require('body-parser') // 获取 Post 中的参数
 const path = require('path')
 
 const config = require('./config/config')
-const Upload = require('./server/routers/upload')
-const Download = require('./server/routers/download')
-const Build = require('./server/routers/build')
+const Routers = require('./server/export')
 
 const app = express()
 const apiRoutes = express.Router()
-
-const { _createFile, } = require('./server/utils/file')
 
 app.engine('.html', require('ejs').__express)
 app.set('views', __dirname + '/views/')
@@ -24,9 +20,9 @@ app.use(bodyParser.urlencoded({
   extended: false
 }))
 
-app.use('/api', [apiRoutes, Upload, Download, Build])
+app.use('/api', [apiRoutes, ...Routers])
 const server = http.createServer(app)
 
 server.listen(config.server.port, '0.0.0.0', () => {
-  console.log(`${config.port} : 启动成功`)
+  console.log(`🚀🚀🚀 启动成功 http://localhost:${config.port}`)
 })

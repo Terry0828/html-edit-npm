@@ -4,10 +4,9 @@ import { connect } from 'react-redux'
 
 import { Button } from 'antd'
 
-import Header from './header/header'
+import '../index.scss'
 
-import './index.scss'
-class Project extends Component {
+class Header extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -15,8 +14,8 @@ class Project extends Component {
   }
   render () {
     return (
-      <div className="project-wrap">
-        <Header />
+      <div className="header-container">
+        <h3 className="">项目管理器</h3>
       </div>
     )
   }
@@ -24,4 +23,4 @@ class Project extends Component {
 
 export default connect(state => ({
   home: state.home,
-}))(Project)
+}))(Header)
