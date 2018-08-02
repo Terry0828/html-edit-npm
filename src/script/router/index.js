@@ -1,14 +1,14 @@
 import React from 'react'
 import { Router, Route } from 'react-router-dom'
 
-import Home from '../containers/home'
+import Visualization from '../containers/visualization'
 import View from '../containers/view'
 import Test from '../containers/test'
 
 export default () => {
   return (
     <div>
-      <Route path="/" exact component={Home} />
+      <Route path="/" exact component={Visualization} />
       <Route path="/view" component={View} />
       <Route path="/test" component={Test} />
     </div>
