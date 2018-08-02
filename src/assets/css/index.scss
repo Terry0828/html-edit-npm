@@ -4,3 +4,31 @@ body {
   background: $B_color;
   color: $T_color;
 }
+
+// 移动端 1px 问题
+.line {
+  position: relative;
+  width: 100%;
+  height: 1px;
+
+  &:after {
+    position: absolute;
+    content: '';
+    top: -50%;
+    bottom: -50%;
+    left: -50%;
+    right: -50%;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+}
+
+.noSelect {
+  // 禁止文本选中
+  user-select: none;
+}
+.noShow{ 
+  // 禁止图片预览拖拽，img 上的事件会无法触发
+  pointer-events: none; 
+}
