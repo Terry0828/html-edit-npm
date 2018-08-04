@@ -1,14 +1,18 @@
 export default (type, obj) => {
-  const res = {}
+  let res = {}
   switch (type) {
     case 'view':
-      res = {
+      return res = {
         type: 'VIEW_SIZE',
+        data: obj,
+      }
+    case 'project':
+      return res = {
+        type: 'PROJECT_INFO',
         data: obj,
       }
     default:
       res = { }
   }
-
   return res
 }

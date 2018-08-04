@@ -1,6 +1,8 @@
 @import './default';
 @import './color';
 body {
+  overflow: hidden;
+  // min-width: 1000px;
   background: $B_color;
   color: $T_color;
 }
@@ -31,4 +33,30 @@ body {
 .noShow{ 
   // 禁止图片预览拖拽，img 上的事件会无法触发
   pointer-events: none; 
+}
+
+.title-large {
+  font-size: 26px;
+  color: $Tit_color;
+}
+
+.title-medium {
+  font-size: 22px;
+  color: $Tit_color;
+}
+
+.title-small {
+  font-size: 18px;
+}
+
+
+
+#app {
+  height: 100%;
+}
+.wrap {
+  height: 100%;
+}
+.router-container {
+  min-height: 100%;
 }

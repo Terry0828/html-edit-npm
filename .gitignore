@@ -3,6 +3,8 @@
 config/config.js
 package-lock.json
 
+project.json
+
 # README.md
 \!*.md
 

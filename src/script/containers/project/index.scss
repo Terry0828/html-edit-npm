@@ -1,6 +1,40 @@
+@import '../../../assets/css/color.scss';
 .project-wrap {
 
   & .header-container {
-    //
+    // background: $El_color_bg;
+    & .title {
+      padding: 20px 0 0;
+      text-align: center;
+      user-select: none;
+      background: $El_color_bg;
+    }
+    & .tabs-box {
+      & .ant-tabs-bar {
+        display: flex;
+        justify-content: center;
+        padding: 30px 0 0;
+        user-select: none;
+        background: $El_color_bg;
+      }
+      & .ant-tabs-tab {
+        width: 100px;
+        text-align: center;
+      }
+      & .ant-tabs-nav .ant-tabs-tab:hover {
+        color: $active_color;
+      }
+      & .ant-tabs-tab-active {
+        color: $active_color;
+      }
+      & .ant-tabs-ink-bar {
+        background-color: $active_color;
+      }
+    }
   }
+}
+
+.project-container {
+  width: 1000px;
+  margin: 0 auto;
 }

@@ -2,10 +2,12 @@ const path = require('path')
 
 module.exports = {
   path: {
+    root: path.resolve(__dirname, '../'),
     module: path.resolve(__dirname, './views'),
     build: path.resolve(__dirname, '../output/build'),
     result: path.resolve(__dirname, '../output/result'),
-    imgs: ''
+    imgs: '',
+    projectInit: path.resolve('/', 'project.json')
   },
   // babel-core 配置
   Babel: {

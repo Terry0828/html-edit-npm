@@ -1,12 +1,14 @@
 
 import { combineReducers } from 'redux'
 
-import home from './home'
+import project from './project'
 import view from './view'
+import home from './home'
 
 const rootReducer = combineReducers({
+  project,
+  view,
   home,
-  view
 })
 
 export default rootReducer
