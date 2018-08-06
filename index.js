@@ -4,7 +4,7 @@ const http = require('http')
 const bodyParser = require('body-parser') // 获取 Post 中的参数
 const path = require('path')
 
-const config = require('./config/config')
+const ProjectConfig = require('./project-config')
 const Routers = require('./server/export')
 
 const app = express()

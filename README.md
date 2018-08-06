@@ -16,7 +16,7 @@ html 可视化编辑器
 
 npm install
 
-cp ./config/config.dev.js ./config/config.js
+cp ./config/config.dev.js ./project-config.js
 
 调试
 npm run dev
