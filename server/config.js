@@ -7,7 +7,8 @@ module.exports = {
     build: path.resolve(__dirname, '../output/build'),
     result: path.resolve(__dirname, '../output/result'),
     imgs: '',
-    projectInit: path.resolve('/', 'project.json')
+    json: path.resolve(__dirname, '../json'),
+    projectInit: path.resolve(__dirname, '../json/project.json')
   },
   // babel-core 配置
   Babel: {

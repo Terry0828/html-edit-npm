@@ -14,9 +14,10 @@ class Project extends Component {
     }
   }
   render () {
+    const { history } = this.props
     return (
       <div className="project-wrap">
-        <Header />
+        <Header history={history}/>
       </div>
     )
   }

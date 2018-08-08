@@ -8,6 +8,7 @@ bower_components
 node_modules/
 /dist/
 /public/
+/json/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

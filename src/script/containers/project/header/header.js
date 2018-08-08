@@ -13,15 +13,26 @@ class Header extends Component {
     this.state = {
     }
   }
+  goUrl(path) {
+    const { history } = this.props
+    history.push({
+      pathname: `/project/${path}`
+    })
+  }
   getTabs() {
     return (<Tabs
       defaultActiveKey="1"
       type="line"
-      onChange={(res) => {console.log(res)}}>
-      <TabPane tab="Tab 1" key="1"></TabPane>
-      <TabPane tab="Tab 2" key="2"></TabPane>
-      <TabPane tab="Tab 3" key="3"></TabPane>
+      onChange={(res) => {this.goUrl(res)}}>
+      <TabPane tab="信息" key="info"></TabPane>
+      <TabPane tab="Init" key="other"></TabPane>
+      <TabPane tab="配置" key="init"></TabPane>
     </Tabs>)
+  }
+  componentDidMount() {
+    const { history } = this.props
+    console.log('history', history)
+    // history.push('/')
   }
   render() {
     return (
@@ -31,7 +42,7 @@ class Header extends Component {
       </div>
     )
   }
-} 
+}
 
 export default connect(state => ({
   home: state.home,

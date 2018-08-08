@@ -6,7 +6,9 @@ import { Provider, connect } from 'react-redux'
 import getStore from './script/store'
 import CreateRouter from './script/router'
 
+import { _IsExistFile } from './script/utils/file'
 import { _Get } from './script/utils/request'
+
 
 import ActionsGlobal from './script/actions/global'
 // 拖拽
@@ -23,6 +25,10 @@ export default class Main extends Component {
     }
   }
   componentWillMount() {
+    _Get('/api/dir')
+    .then(res => {
+      console.log(res)
+    })
     // 查询是否有项目的配置文件，没有的话切换路由(/init)生成配置文件
     _Get('/api/projectInit')
     .then(res => {

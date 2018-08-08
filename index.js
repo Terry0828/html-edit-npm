@@ -4,11 +4,16 @@ const http = require('http')
 const bodyParser = require('body-parser') // 获取 Post 中的参数
 const path = require('path')
 
-const ProjectConfig = require('./project-config')
+const config = require('./project-config')
 const Routers = require('./server/export')
+
 
 const app = express()
 const apiRoutes = express.Router()
+const os = require('os')
+console.log(os.homedir())
+console.log(__dirname)
+
 
 app.engine('.html', require('ejs').__express)
 app.set('views', __dirname + '/views/')

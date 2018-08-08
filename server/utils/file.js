@@ -1,11 +1,24 @@
 
 const archiver = require('archiver')
 const path = require('path')
-const fs = require('fs')
+const fs = require('fs-extra')
 const os = require('os')
+const slash = require('slash')
 // const childProcess = require('child_process') // 可以输出 cmd 命令
 
 const config = require('../config')
+
+const normalizeFilePaths = (files) => {
+  Object.keys(files).forEach(file => {
+    const normalized = slash(file)
+    if (file !== normalized) {
+      files[normalized] = files[file]
+      delete files[file]
+    }
+  })
+  return files
+}
+exports._normalizeFilePaths = (files) => normalizeFilePaths(files)
 
 /**
  * @description 压缩文件或目录
@@ -57,6 +70,38 @@ const getAllFiles = (root = config.path.build, reg = false) => {
   return res
 }
 exports._getAllFiles = async(root, reg) => getAllFiles(root, reg)
+
+/**
+ * @description 得到目录下的文件夹和文件
+ * @param {*} [root=config.path.build] 文件目录
+ * @returns 返回 { files: [], dirs: [] }
+ */
+const getDirs = (root = config.path.build, reg = false) => {
+  let res = {
+    files: [],
+    dirs: []
+  }
+
+  const files = normalizeFilePaths(fs.readdirSync(root))
+  files.forEach(function(file) {
+    const pathname = root + '/' + file
+    const stat = fs.lstatSync(pathname)
+
+    if (stat.isDirectory()) {
+      const fitlPath = path.resolve(root, file).replace(/\\/g, '/')
+      if (reg === false || reg.test(fitlPath)) {
+        res.dirs.push({ url: fitlPath, dir: fitlPath.replace(config.path.build + '/', '') })
+      }
+    } else if(stat.isFile()) {
+      const fitlPath = path.resolve(root, file).replace(/\\/g, '/')
+      if (reg === false || reg.test(fitlPath)) {
+        res.files.push({ url: fitlPath, file: fitlPath.replace(config.path.build + '/', '') })
+      }
+    }
+  })
+  return res
+}
+exports._getDirs = async(root) => getDirs(root)
 
 /**
  * @description 判断文件或文件夹是否存在

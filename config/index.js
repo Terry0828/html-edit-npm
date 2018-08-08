@@ -7,7 +7,6 @@ const config = require('../project-config')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',

@@ -12,8 +12,6 @@ class View extends Component {
       msg: 'view'
     }
   }
-
-
   goUrl() {
     const { history } = this.props
     history.push('/')
