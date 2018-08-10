@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class Tabs extends Component {
+export default class PathView extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -8,7 +8,7 @@ export default class Tabs extends Component {
   }
   render() {
     return (
-      <div className="tabs-box">
+      <div className="path-view-box">
       </div>
     )
   }

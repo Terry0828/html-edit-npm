@@ -3,9 +3,10 @@ import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 
 import Step from './step/step'
+import PathView from '../../components/path_view'
 
 import './index.scss'
-class Init extends Component {
+class ProjectInit extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -15,13 +16,14 @@ class Init extends Component {
     return (
       <div className="project-init-wrap project-container">
         <Step />
+        <PathView />
       </div>
     )
   }
 } 
 
-Init.propTypes = {
+ProjectInit.propTypes = {
 }
 export default connect(state => ({
   home: state.home,
-}))(Init)
+}))(ProjectInit)

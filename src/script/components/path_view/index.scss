@@ -1,0 +1,23 @@
+@import '../../../assets/css/color.scss';
+.path-view-box {
+  & .nav {
+    display: flex;
+  }
+
+  & .path-icon {
+    cursor: pointer;
+    transition: background ease .5s;
+    background-color: $El_color_bg;
+
+    &:hover {
+      // color: #fff;
+      color: rgba(0, 0, 0, 0.4);
+      background-color: $El_color_bg_active;
+    }
+  }
+
+  & .path-detail-box {
+    flex: 1;
+    margin: 0 15px;
+  }
+}

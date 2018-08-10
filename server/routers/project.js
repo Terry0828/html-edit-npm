@@ -8,11 +8,15 @@ const config = require('../config')
 apiRoutes.get('/projectInit', (req, res) => {
   _isExists(config.path.projectInit)
   .then(result => {
-    console.log('exists: ', result)
     return res.json({
       code: 0,
       message: "success",
-      data: result
+      data: {
+        exists: true,
+        content: '',
+        root: config.path.root,
+        nowPath: config.path.root
+      }
     })
   })
 })

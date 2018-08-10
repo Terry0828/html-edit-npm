@@ -33,11 +33,11 @@ export default class Main extends Component {
     _Get('/api/projectInit')
     .then(res => {
       if(res.code === 0) {
-        const routerInit = !!res.data ? 'info' : 'init'
+        const routerInit = !!res.data.exists ? 'info' : 'init'
         this.props.dispatch(ActionsGlobal('project', {
           projectJSON: {
-            configExist: !!res.data,
-            routerInit: !!res.data ? 'info' : 'init'
+            routerInit: !!res.data.exists ? 'info' : 'init',
+            ...res.data
           }
         }))
         this.setState({ routerInit })

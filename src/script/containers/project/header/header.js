@@ -20,8 +20,10 @@ class Header extends Component {
     })
   }
   getTabs() {
+    console.log(this.props.history)
+    const { history } = this.props
     return (<Tabs
-      defaultActiveKey="1"
+      defaultActiveKey={history.location.pathname.replace(/\/\w+\//i, '')}
       type="line"
       onChange={(res) => {this.goUrl(res)}}>
       <TabPane tab="信息" key="info"></TabPane>
