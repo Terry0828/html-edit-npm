@@ -6,8 +6,8 @@ const { _getDirs } = require('../utils/file')
 const config = require('../config')
 
 apiRoutes.get('/dir', (req, res) => {
-
-  _getDirs(req.query.root)
+  const path = req.query.root || config.path.root
+  _getDirs(path)
   .then(result => {
     return res.json({
       code: 0,

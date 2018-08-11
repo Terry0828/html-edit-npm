@@ -78,8 +78,8 @@ exports._getAllFiles = async(root, reg) => getAllFiles(root, reg)
  */
 const getDirs = (root = config.path.build, reg = false) => {
   let res = {
-    files: [],
-    dirs: []
+    hidden: { files: [], dirs: [] },
+    visible: { files: [], dirs: [] }
   }
 
   const files = normalizeFilePaths(fs.readdirSync(root))
@@ -90,12 +90,22 @@ const getDirs = (root = config.path.build, reg = false) => {
     if (stat.isDirectory()) {
       const fitlPath = path.resolve(root, file).replace(/\\/g, '/')
       if (reg === false || reg.test(fitlPath)) {
-        res.dirs.push({ url: fitlPath, dir: fitlPath.replace(config.path.build + '/', '') })
+        const dir = fitlPath.replace(root + '/', '')
+        if(/^\./.test(dir) === true) {
+          res.hidden.dirs.push({ url: fitlPath, dir })
+        } else {
+          res.visible.dirs.push({ url: fitlPath, dir })
+        }
       }
     } else if(stat.isFile()) {
       const fitlPath = path.resolve(root, file).replace(/\\/g, '/')
       if (reg === false || reg.test(fitlPath)) {
-        res.files.push({ url: fitlPath, file: fitlPath.replace(config.path.build + '/', '') })
+        const file = fitlPath.replace(root + '/', '')
+        if(/^\./.test(file) === true) {
+          res.hidden.files.push({ url: fitlPath, file })
+        } else {
+          res.visible.files.push({ url: fitlPath, file })
+        }
       }
     }
   })

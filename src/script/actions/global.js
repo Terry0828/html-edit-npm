@@ -11,6 +11,11 @@ export default (type, obj) => {
         type: 'PROJECT_INFO',
         data: obj,
       }
+    case 'project_path':
+      return res = {
+        type: 'PROJECT_PATH',
+        data: obj,
+      }
     default:
       res = { }
   }

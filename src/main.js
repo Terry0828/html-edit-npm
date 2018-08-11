@@ -25,10 +25,6 @@ export default class Main extends Component {
     }
   }
   componentWillMount() {
-    _Get('/api/dir')
-    .then(res => {
-      console.log(res)
-    })
     // 查询是否有项目的配置文件，没有的话切换路由(/init)生成配置文件
     _Get('/api/projectInit')
     .then(res => {

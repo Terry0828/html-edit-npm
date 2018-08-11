@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
+import { get } from 'lodash'
 import { Icon, Tooltip } from 'antd'
 // import Icon from '../common/icon'
+import { _Get } from '../../utils/request'
+import Action from '../../actions/global'
 
 import './index.scss'
 class PathView extends Component {
@@ -10,6 +13,25 @@ class PathView extends Component {
     super(props)
     this.state = {
     }
+  }
+  componentWillMount() {
+    this.updatePath()
+  }
+  updatePath(root) {
+    const { dispatch } = this.props
+    return _Get('/api/dir', {
+      root
+    })
+    .then(res => {
+      dispatch(Action('project_path', res.data))
+    })
+  }
+  getPathEl() {
+    const { project } = this.props
+    console.log('project', project)
+    return (
+      <div>{get(project)}</div>
+    )
   }
   render () {
     const { style } = this.props
@@ -23,6 +45,7 @@ class PathView extends Component {
             <Tooltip placement="top" title={'根目录'}>
               <Icon type="folder" className="icon-ant path-icon" />
             </Tooltip>
+            {this.getPathEl()}
           </div>
         </div>
       </div>
@@ -34,5 +57,5 @@ PathView.propTypes = {
   style: PropTypes.object
 }
 export default connect(state => ({
-  home: state.home,
+  project: state.project,
 }))(PathView)
