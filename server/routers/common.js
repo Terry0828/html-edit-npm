@@ -15,7 +15,6 @@ apiRoutes.get('/dir', (req, res) => {
       data: result
     })
   })
-  
 })
 
 module.exports = apiRoutes

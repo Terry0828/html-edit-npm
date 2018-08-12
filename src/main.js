@@ -14,6 +14,7 @@ import ActionsGlobal from './script/actions/global'
 // 拖拽
 // import './assets/css/dragula.css'
 import './assets/css/index.scss'
+import { throws } from 'assert';
 // antd
 // import 'antd/dist/antd.css'
 
@@ -31,13 +32,12 @@ export default class Main extends Component {
       if(res.code === 0) {
         const routerInit = !!res.data.exists ? 'info' : 'init'
         this.props.dispatch(ActionsGlobal('project', {
-          projectJSON: {
-            routerInit: !!res.data.exists ? 'info' : 'init',
-            ...res.data
-          }
+          routerInit: !!res.data.exists ? 'info' : 'init',
+          ...res.data
         }))
         this.setState({ routerInit })
       }
+      console.log('this.props.project', this.props.project)
     })
   }
   render() {

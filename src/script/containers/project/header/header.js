@@ -20,7 +20,6 @@ class Header extends Component {
     })
   }
   getTabs() {
-    console.log(this.props.history)
     const { history } = this.props
     return (<Tabs
       defaultActiveKey={history.location.pathname.replace(/\/\w+\//i, '')}
@@ -33,7 +32,6 @@ class Header extends Component {
   }
   componentDidMount() {
     const { history } = this.props
-    console.log('history', history)
     // history.push('/')
   }
   render() {

@@ -15,7 +15,9 @@ class PathView extends Component {
     }
   }
   componentWillMount() {
-    this.updatePath()
+    const { project } = this.props
+    console.log(this.props.project)
+    !project.hidden && this.updatePath()
   }
   updatePath(root) {
     const { dispatch } = this.props
@@ -24,13 +26,19 @@ class PathView extends Component {
     })
     .then(res => {
       dispatch(Action('project_path', res.data))
+      console.log(this.props.project)
     })
   }
   getPathEl() {
     const { project } = this.props
-    console.log('project', project)
     return (
-      <div>{get(project)}</div>
+      <div className="path-choose-el">{get(project)}</div>
+    )
+  }
+  getPathFiles() {
+    const { project } = this.props
+    return (
+      <div className="files-detail-box"></div>
     )
   }
   render () {
