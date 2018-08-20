@@ -1,23 +1,79 @@
 @import '../../../assets/css/color.scss';
 .path-view-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   & .nav {
     display: flex;
   }
 
   & .path-icon {
     cursor: pointer;
-    transition: background ease .5s;
+    transition: all ease .5s;
     background-color: $El_color_bg;
 
     &:hover {
-      // color: #fff;
-      color: rgba(0, 0, 0, 0.4);
+      color: rgba(0, 0, 0, 0.8);
       background-color: $El_color_bg_active;
     }
   }
 
   & .path-detail-box {
+    display: flex;
     flex: 1;
     margin: 0 15px;
+
+    & .path-choose-el-box {
+      display: flex;
+      flex: 1;
+
+      & .path-choose-el {
+        transition: all ease .5s;
+        cursor: pointer;
+        padding: 0 10px;
+        margin: 0 0 0 3px;
+        border-radius: 3px;
+        line-height: 30px;
+        background-color: $El_color_bg;
+
+        &:hover {
+          color: rgba(0, 0, 0, 0.8);
+          background-color: $El_color_bg_active;
+        }
+        &:last-child {
+          flex: 1;
+        }
+
+      }
+
+    }
+  }
+
+  & .files-detail-box {
+    flex: 1;
+    overflow-y: scroll;
+    margin: 20px 0 0;
+    padding: 0 0 20px;
+
+    & .hidden-detail-item {
+      opacity: 0.5;
+    }
+    & .detail-item {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 0 20px;
+      border-radius: 3px;
+      line-height: 50px;
+
+      &:hover {
+        color: rgba(0, 0, 0, 0.8);
+        background-color: $El_color_bg;
+      }
+
+      & .detail-icon {
+        margin: 0 20px 0 0;
+      }
+    }
   }
 }

@@ -2,7 +2,7 @@
  * @Author: WenJW
  * @Date: 2018-07-27 16:57:24
  * @Last Modified by: WenJW
- * @Last Modified time: 2018-08-12 20:18:14
+ * @Last Modified time: 2018-08-20 17:50:23
  * @description
  */
 import Golbal from './global'
@@ -19,6 +19,7 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         info: {
+          hidden: false,
           ...state.info,
           ...action.data
         },

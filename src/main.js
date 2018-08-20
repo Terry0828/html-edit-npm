@@ -9,7 +9,6 @@ import CreateRouter from './script/router'
 import { _IsExistFile } from './script/utils/file'
 import { _Get } from './script/utils/request'
 
-
 import ActionsGlobal from './script/actions/global'
 // 拖拽
 // import './assets/css/dragula.css'
@@ -17,13 +16,11 @@ import './assets/css/index.scss'
 import { throws } from 'assert';
 // antd
 // import 'antd/dist/antd.css'
-
-
 export default class Main extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      routerInit: 'init'
+      routerInit: ''
     }
   }
   componentWillMount() {
@@ -46,7 +43,7 @@ export default class Main extends Component {
     return (
       <div className="wrap">
         <Router>
-          {CreateRouter(routerInit)}
+          {routerInit && CreateRouter(routerInit)}
         </Router>
       </div>
     )
