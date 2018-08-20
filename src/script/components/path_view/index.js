@@ -35,6 +35,9 @@ class PathView extends Component {
         {
           rootSplitPath.map((item, index) => {
             return item ? <div
+              onClick={() => {
+                this.updatePath(rootSplitPath.slice(0, index+1).join('/'))
+              }}
               key={`path-item-${index}`}
               className="path-choose-el">
               {item}

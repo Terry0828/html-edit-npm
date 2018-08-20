@@ -8,6 +8,18 @@ const slash = require('slash')
 
 const config = require('../config')
 
+const normalizeFilePaths = (files) => {
+  Object.keys(files).forEach(file => {
+    const normalized = slash(file)
+    if (file !== normalized) {
+      files[normalized] = files[file]
+      delete files[file]
+    }
+  })
+  return files
+}
+exports._normalizeFilePaths = (files) => normalizeFilePaths(files)
+
 /**
  * @description 压缩文件或目录
  * @param {*} [files=[]] 文件数组，[{ url: '/a.txt', name: 'file1.txt' }]
