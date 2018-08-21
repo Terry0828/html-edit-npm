@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
-import { Icon, Tooltip } from 'antd'
+import { Icon, Tooltip, message } from 'antd'
 import { _Get } from '../../utils/request'
 import Action from '../../actions/global'
 
@@ -11,6 +11,7 @@ class PathView extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loading: false
     }
   }
   componentWillMount() {
@@ -18,13 +19,17 @@ class PathView extends Component {
     !get(project, 'path.hidden', false) && this.updatePath()
   }
   updatePath(root) {
-    const { dispatch } = this.props
-    return _Get('/api/dir', {
-      root
-    })
+    this.setState({ loading: true })
+    const { dispatch, project } = this.props
+    if(project.info.nowPath === root) {
+      this.setState({ loading: false })
+      return message.warning('已经是当前路径！')
+    }
+    return _Get('/api/dir', { root })
     .then(res => {
+      root && dispatch(Action('project', { nowPath: root }))
       dispatch(Action('project_path', res.data))
-      console.log(this.props.project)
+      this.setState({ loading: false })
     })
   }
   getPathEl() {
@@ -48,10 +53,14 @@ class PathView extends Component {
     )
   }
   getFilesDetail(data, type, showSta) {
+    if(!data[0]){ return }
     const _type = data[0].file ? 'file' : 'dir'
     return (
       data.map((item, index) => {
         return showSta === true ? null : <div
+        onClick={ () => {
+          _type === 'dir' ? this.clickDirPath(item) : this.clickFilePath(item)
+        }}
         key={`${type}-dirs-${index}`}
         className={`${type}-detail-item detail-item`}>
           <Icon type={_type === 'file' ? 'file' : 'folder'} className="icon-ant detail-icon" />
@@ -77,20 +86,35 @@ class PathView extends Component {
       </div>
     )
   }
+  clickDirPath(path) {
+    const { project } = this.props
+    const nowPath = get(project, 'info.nowPath', false)
+    const root = `${nowPath}/${path.dir}`
+    this.updatePath(root)
+  }
+  clickFilePath(path) {}
   render () {
     const { style } = this.props
+    const { loading } = this.state
     return (
       <div style={style} className="path-view-box">
         <div className="nav">
           <Tooltip placement="top" title={'上一级目录'}>
             <Icon type="up" className="icon-ant path-icon" />
           </Tooltip>
+
           <div className="path-detail-box">
             <Tooltip placement="top" title={'根目录'}>
               <Icon type="folder" className="icon-ant path-icon" />
             </Tooltip>
             {this.getPathEl()}
           </div>
+
+          <div className="path-operation-box">
+
+          </div>
+
+          <div className={`pathview-loading${loading ? ' loading-animated' : ''}`} />
         </div>
         {this.getPathFiles()}
       </div>

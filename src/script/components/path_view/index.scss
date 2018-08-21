@@ -5,6 +5,31 @@
   height: 100%;
   & .nav {
     display: flex;
+    position: relative;
+    padding: 0 0 4px;
+
+    & .pathview-loading {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: $El_color_bg_active;
+      opacity: 0;
+    }
+    .loading-animated {
+			animation: pathGetAnimate 2s linear 0s infinite normal;
+		}
+		@keyframes pathGetAnimate {
+			0% {
+        opacity: 1;
+        width: 0%;
+      }
+			100% {
+        opacity: 1;
+        width: 100%;
+      }
+		}
   }
 
   & .path-icon {
@@ -73,6 +98,7 @@
 
       & .detail-icon {
         margin: 0 20px 0 0;
+        color: $active_color;
       }
     }
   }
