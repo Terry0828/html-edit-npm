@@ -90,7 +90,7 @@ const getDirs = (root = config.path.build, reg = false) => {
     if (stat.isDirectory()) {
       const fitlPath = path.resolve(root, file).replace(/\\/g, '/')
       if (reg === false || reg.test(fitlPath)) {
-        const dir = fitlPath.replace(root + '/', '')
+        const dir = fitlPath.replace(/\S*(\/\S+$)/g, '$1').replace('/', '')
         if(/^\./.test(dir) === true) {
           res.hidden.dirs.push({ url: fitlPath, dir })
         } else {
@@ -100,7 +100,11 @@ const getDirs = (root = config.path.build, reg = false) => {
     } else if(stat.isFile()) {
       const fitlPath = path.resolve(root, file).replace(/\\/g, '/')
       if (reg === false || reg.test(fitlPath)) {
-        const file = fitlPath.replace(root + '/', '')
+        const file = fitlPath.replace(/\S*(\/\S+$)/g, '$1').replace('/', '')
+        console.log('*****\n')
+        console.log(file)
+        console.log(/^\./.test(file) === true)
+        console.log('*****\n')
         if(/^\./.test(file) === true) {
           res.hidden.files.push({ url: fitlPath, file })
         } else {

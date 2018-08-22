@@ -84,6 +84,7 @@
       opacity: 0.5;
     }
     & .detail-item {
+      transition: all ease .3s;
       display: flex;
       align-items: center;
       cursor: pointer;

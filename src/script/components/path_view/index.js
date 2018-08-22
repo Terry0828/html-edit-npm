@@ -86,11 +86,18 @@ class PathView extends Component {
       </div>
     )
   }
+  getPrePath() {
+    const { project } = this.props
+    const nowPath = get(project, 'info.nowPath', false)
+    if(nowPath === '/') { return message.warning('已经是根目录！') }
+    const prePath = nowPath.split('/').slice(0, -1).join('/')
+    return this.updatePath(prePath)
+  }
   clickDirPath(path) {
     const { project } = this.props
     const nowPath = get(project, 'info.nowPath', false)
     const root = `${nowPath}/${path.dir}`
-    this.updatePath(root)
+    return this.updatePath(root)
   }
   clickFilePath(path) {}
   render () {
@@ -100,12 +107,20 @@ class PathView extends Component {
       <div style={style} className="path-view-box">
         <div className="nav">
           <Tooltip placement="top" title={'上一级目录'}>
-            <Icon type="up" className="icon-ant path-icon" />
+            <Icon
+              onClick={this.getPrePath.bind(this)}
+              type="up"
+              className="icon-ant path-icon"
+            />
           </Tooltip>
 
           <div className="path-detail-box">
             <Tooltip placement="top" title={'根目录'}>
-              <Icon type="folder" className="icon-ant path-icon" />
+              <Icon
+                onClick={() => {this.updatePath('/')}}
+                type="folder"
+                className="icon-ant path-icon"
+              />
             </Tooltip>
             {this.getPathEl()}
           </div>
